@@ -1,4 +1,4 @@
-const CACHE_NAME = 'f3f-manager-v5.25';
+const CACHE_NAME = 'f3f-manager-v5.2.1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

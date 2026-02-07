@@ -1,7 +1,4 @@
 /* --- DICTIONNAIRE DE TRADUCTION --- */
-/* --- DICTIONNAIRE DE TRADUCTION --- */
-/* --- DICTIONNAIRE DE TRADUCTION --- */
-/* --- DICTIONNAIRE DE TRADUCTION --- */
 const dict = {
     fr: {
         new_model: "+ NOUVEAU MODÈLE", logbook_btn: "📓 JOURNAL DES VOLS", back: "RETOUR", config: "CONFIG",
@@ -269,18 +266,9 @@ function calculateAB() {
     let y1 = parseFloat(globalCoefs.m1); 
     let x2 = parseFloat(globalCoefs.v2);
     let y2 = parseFloat(globalCoefs.m2);
-    
-    // Protection division par zéro
     if (x2 === x1) x2 += 0.1; 
-    
     globalCoefs.a = (y2 - y1) / (x2 - x1);
     globalCoefs.b = y1 - (globalCoefs.a * x1);
-
-    // NOUVEAU : Affichage dans le HTML
-    const elA = document.getElementById('disp-coef-a');
-    const elB = document.getElementById('disp-coef-b');
-    if(elA) elA.innerText = globalCoefs.a.toFixed(3);
-    if(elB) elB.innerText = globalCoefs.b.toFixed(3);
 }
 
 function getCalculatedTargetWeight(w, f, gliderArea) {
@@ -664,76 +652,12 @@ window.createNewGlider = function() { tempGlider = { id: Date.now(), name: "MOD�
 window.editCurrentGlider = function() { const g = gliders.find(x => x.id == currentGliderId); if(!g) return; tempGlider = JSON.parse(JSON.stringify(g)); renderEdit(); window.navigateTo('edit'); };
 function renderEdit() { 
     document.getElementById('edit-name').value = tempGlider.name; 
-    document.getElementById('edit-empty-w').value = tempGlider.emptyW; 
-    document.getElementById('edit-empty-cg').value = tempGlider.emptyCG; 
-    document.getElementById('edit-area').value = tempGlider.area; 
-    document.getElementById('edit-target').value = tempGlider.target; 
-    document.getElementById('edit-nose-dist').value = tempGlider.noseDist || 0; 
-    document.getElementById('edit-nose-color').value = tempGlider.noseColor || "#d63384";
-    
-    const l = document.getElementById('edit-chambers-list'); 
-    l.innerHTML = ''; 
-    
-    tempGlider.chambers.forEach((c,i) => { 
-        const d = document.createElement('div'); 
-        d.className = 'card'; 
-        d.style.position = 'relative'; 
-        const mb = c.mass_brass || '', ml = c.mass_lead || '', mt = c.mass_tungsten || '';
-        const sb = c.stock_brass || '', sl = c.stock_lead || '', st = c.stock_tungsten || '';
-        const gr = c.group || ''; // Si vide, c'est vide
-        const clr = c.color || '#888888'; 
-
-        d.innerHTML = `
-        <button style="position:absolute; top:10px; right:10px; color:var(--danger); border:none; background:none; font-size:1.5rem;" onclick="window.rmCh(${i})">×</button>
-        
-        <div class="row">
-            <div style="flex:0 0 50px; display:flex; flex-direction:column; align-items:center;">
-                <label class="lbl-small">${t('lbl_color')}</label>
-                <input type="color" value="${clr}" onchange="window.upc(${i},'color',this.value)" style="width:100%; height:35px; border:none; padding:0; background:none; cursor:pointer; margin-top:2px;">
-                <div onclick="window.resetColor(${i})" style="font-size:0.8rem; cursor:pointer; color:var(--text-muted); margin-top:4px;">↺</div>
-            </div>
-            <div style="flex:3">
-                <label class="lbl-small">${t('lbl_ch_name')}</label>
-                <input value="${c.name}" onchange="window.upc(${i},'name',this.value)">
-            </div>
-            <div style="flex:1">
-                <label class="lbl-small">${t('lbl_grp')}</label>
-                <input type="number" placeholder="ID" value="${gr}" onchange="window.upc(${i},'group',this.value)" style="border-color:var(--primary)">
-            </div>
-        </div>
-        
-        <div class="row" style="margin-top:10px;">
-            <div style="flex:1">
-                <label class="lbl-small">${t('lbl_dist')}</label>
-                <input type="number" value="${c.dist}" onchange="window.upc(${i},'dist',this.value)">
-            </div>
-            <div style="flex:1">
-                <label class="lbl-small">${t('lbl_max')}</label>
-                <input type="number" value="${c.max}" onchange="window.upc(${i},'max',this.value)">
-            </div>
-        </div>
-        
-        <div style="margin-top:10px;">
-            <label class="lbl-small">${t('lbl_unit_mass')}</label>
-            <div class="row">
-                <input type="number" placeholder="${t('mat_brass')}" value="${mb}" onchange="window.upc(${i},'mass_brass',this.value)" style="border-bottom:2px solid var(--c-brass)">
-                <input type="number" placeholder="${t('mat_lead')}" value="${ml}" onchange="window.upc(${i},'mass_lead',this.value)" style="border-bottom:2px solid var(--c-lead)">
-                <input type="number" placeholder="${t('mat_tung')}" value="${mt}" onchange="window.upc(${i},'mass_tungsten',this.value)" style="border-bottom:2px solid var(--c-tung)">
-            </div>
-        </div>
-        
-        <div style="margin-top:5px;">
-            <label class="lbl-small">${t('lbl_stock')}</label>
-            <div class="row">
-                <input type="number" placeholder="${t('ph_stock')}" value="${sb}" onchange="window.upc(${i},'stock_brass',this.value)">
-                <input type="number" placeholder="${t('ph_stock')}" value="${sl}" onchange="window.upc(${i},'stock_lead',this.value)">
-                <input type="number" placeholder="${t('ph_stock')}" value="${st}" onchange="window.upc(${i},'stock_tungsten',this.value)">
-            </div>
-        </div>`; 
-        l.appendChild(d); 
-    }); 
-    updateUITexts(); 
-}
+    document.getElementById('edit-empty-w').value = tempGlider.emptyW; document.getElementById('edit-empty-cg').value = tempGlider.emptyCG; 
+    document.getElementById('edit-area').value = tempGlider.area; document.getElementById('edit-target').value = tempGlider.target; 
+    document.getElementById('edit-nose-dist').value = tempGlider.noseDist || 0; document.getElementById('edit-nose-color').value = tempGlider.noseColor || "#d63384";
+    const l = document.getElementById('edit-chambers-list'); l.innerHTML = ''; 
+    tempGlider.chambers.forEach((c,i) => { const d = document.createElement('div'); d.className = 'card'; d.style.position = 'relative'; const mb = c.mass_brass || '', ml = c.mass_lead || '', mt = c.mass_tungsten || '', sb = c.stock_brass || '', sl = c.stock_lead || '', st = c.stock_tungsten || '', gr = c.group || '', clr = c.color || '#888888'; d.innerHTML = `<button style="position:absolute; top:10px; right:10px; color:var(--danger); border:none; background:none; font-size:1.5rem;" onclick="window.rmCh(${i})">×</button><div class="row"><div style="flex:0 0 50px; display:flex; flex-direction:column; align-items:center;"><label class="lbl-small">${t('lbl_color')}</label><input type="color" value="${clr}" onchange="window.upc(${i},'color',this.value)" style="width:100%; height:35px; border:none; padding:0; background:none; cursor:pointer; margin-top:2px;"><div onclick="window.resetColor(${i})" style="font-size:0.8rem; cursor:pointer; color:var(--text-muted); margin-top:4px;">↺</div></div><div style="flex:3"><label class="lbl-small">${t('lbl_name')}</label><input value="${c.name}" onchange="window.upc(${i},'name',this.value)"></div><div style="flex:1"><label class="lbl-small">${t('lbl_grp')}</label><input type="number" value="${gr}" onchange="window.upc(${i},'group',this.value)" style="border-color:var(--primary)"></div></div><div class="row" style="margin-top:10px;"><div style="flex:1"><label class="lbl-small">${t('lbl_dist')}</label><input type="number" value="${c.dist}" onchange="window.upc(${i},'dist',this.value)"></div><div style="flex:1"><label class="lbl-small">${t('lbl_max')}</label><input type="number" value="${c.max}" onchange="window.upc(${i},'max',this.value)"></div></div><div style="margin-top:10px;"><label class="lbl-small">${t('lbl_unit_mass')}</label><div class="row"><input type="number" placeholder="${t('mat_brass')}" value="${mb}" onchange="window.upc(${i},'mass_brass',this.value)" style="border-bottom:2px solid var(--c-brass)"><input type="number" placeholder="${t('mat_lead')}" value="${ml}" onchange="window.upc(${i},'mass_lead',this.value)" style="border-bottom:2px solid var(--c-lead)"><input type="number" placeholder="${t('mat_tung')}" value="${mt}" onchange="window.upc(${i},'mass_tungsten',this.value)" style="border-bottom:2px solid var(--c-tung)"></div></div><div style="margin-top:5px;"><label class="lbl-small">${t('lbl_stock')}</label><div class="row"><input type="number" placeholder="${t('ph_stock')}" value="${sb}" onchange="window.upc(${i},'stock_brass',this.value)"><input type="number" placeholder="${t('ph_stock')}" value="${sl}" onchange="window.upc(${i},'stock_lead',this.value)"><input type="number" placeholder="${t('ph_stock')}" value="${st}" onchange="window.upc(${i},'stock_tungsten',this.value)"></div></div>`; l.appendChild(d); }); updateUITexts(); }
+window.upc = function(i,k,v) { if(k==='name'||k==='color') tempGlider.chambers[i][k]=v; else { let val = parseFloat(v); if(isNaN(val)) val = null; tempGlider.chambers[i][k]=val; } };
 window.rmCh = function(i) { tempGlider.chambers.splice(i,1); renderEdit(); };
 window.resetColor = function(t) { if(t==='nose') { document.getElementById('edit-nose-color').value = '#d63384'; tempGlider.noseColor = '#d63384'; } else { tempGlider.chambers[t].color = '#888888'; renderEdit(); } };
 window.addChamberLine = function() { tempGlider.chambers.push({name:"BALLAST", dist:0, max:5, mass_brass:0, mass_lead:0, mass_tungsten:0, color:"#888888"}); renderEdit(); };
