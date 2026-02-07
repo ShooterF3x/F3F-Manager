@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0d6efd">
+    
+    <title>F3F Manager v5.24</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@400;600;700&family=Roboto:wght@300;400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <script src="js/app.js" defer></script>
+</head>
+<body data-theme="cyber">
+
+<div id="custom-modal-overlay"><div class="modal-box"><div id="modal-msg" style="margin-bottom:20px; font-weight:bold;"></div><input type="text" id="modal-input-field" class="hidden" style="margin-bottom:20px; width:100%;"><div id="modal-buttons" class="row"></div></div></div>
+<input type="file" id="import-file" style="display:none" accept=".json,.bak">
+
+<div id="view-home">
+    <div style="position:absolute; top:20px; right:15px; display:flex; gap:10px;">
+        <button class="btn btn-help" onclick="window.navigateTo('help')">?</button>
+        <button class="btn btn-outline" style="width:auto; padding:10px;" onclick="window.navigateTo('settings')">⚙️</button>
+    </div>
+    <div class="logo-container">
+        <div class="logo-main">F3F</div>
+        <div class="logo-sub">MANAGER v5.24</div>
+    </div>
+    <div id="glider-list"></div>
+    <div class="row" style="margin-top:20px;"><button class="btn btn-primary" onclick="window.createNewGlider()" data-i18n="new_model">NOUVEAU MODÈLE</button></div>
+    <div class="row"><button class="btn btn-log" onclick="window.navigateTo('logbook')" data-i18n="logbook_btn">JOURNAL DES VOLS</button></div>
+    <div class="copyright">© 2026 F3F Manager v5.24 (Clean Architecture)</div>
+</div>
+
+<div id="view-help" class="hidden">
+    <h1 data-i18n="help_title">AIDE</h1>
+    <div class="card" id="help-content" style="text-align:left;"></div>
+    <button class="btn btn-outline" onclick="history.back()" data-i18n="back">RETOUR</button>
+</div>
+
+<div id="view-settings" class="hidden">
+    <h1 data-i18n="settings_title">PARAMÈTRES</h1>
+    <div class="card">
+        <h2 data-i18n="language">LANGUE</h2>
+        <select id="lang-select" onchange="window.changeLang(this.value)" style="margin-bottom:20px;">
+            <option value="fr">🇫🇷 FRANÇAIS</option>
+            <option value="en">🇺🇸 ENGLISH</option>
+            <option value="es">🇪🇸 ESPAÑOL</option>
+        </select>
+        
+        <h2 data-i18n="theme">THÈME</h2>
+        <select id="theme-select" onchange="window.setTheme(this.value)" style="margin-bottom:20px;">
+            <option value="cyber">CYBER (Défaut)</option>
+            <option value="snow">SNOW (Clair)</option>
+            <option value="flat">FLAT (Design)</option>
+            <option value="bunker">BUNKER (Indus)</option>
+        </select>
+
+        <h2 style="margin-top:20px;" data-i18n="opt_title">OPTIMISATION</h2>
+        <div class="desc-text" data-i18n="opt_desc">Réglages des limites acceptables.</div>
+        <div class="row">
+            <div style="flex:1"><label class="lbl-small" data-i18n="lbl_tol_w_min">Tol. Poids -</label><input type="number" id="set-tol-w-min" onchange="window.saveOptParams()"></div>
+            <div style="flex:1"><label class="lbl-small" data-i18n="lbl_tol_w_max">Tol. Poids +</label><input type="number" id="set-tol-w-max" onchange="window.saveOptParams()"></div>
+        </div>
+        <div class="row">
+            <div style="flex:1"><label class="lbl-small" data-i18n="lbl_tol_cg_plus">Tol. CG +</label><input type="number" id="set-tol-cg-plus" step="0.1" onchange="window.saveOptParams()"></div>
+            <div style="flex:1"><label class="lbl-small" data-i18n="lbl_tol_cg_min">Tol. CG -</label><input type="number" id="set-tol-cg-minus" step="0.1" onchange="window.saveOptParams()"></div>
+        </div>
+
+        <h2 data-i18n="global_calc" style="margin-top:20px;">Calcul Global</h2>
+        
+        <div class="box-param">
+            <div class="box-title" data-i18n="pt1">POINT 1</div>
+            <div class="row">
+                <div style="flex:1"><label class="lbl-small" data-i18n="wind">Vent (m/s)</label><input type="number" id="set-v1" step="1" onchange="window.saveGlobalCoefs()"></div>
+                <div style="flex:1"><label class="lbl-small" data-i18n="lbl_weight_kg">Poids (kg)</label><input type="number" id="set-m1" step="0.01" onchange="window.saveGlobalCoefs()"></div>
+            </div>
+        </div>
+        
+        <div class="box-param">
+            <div class="box-title" data-i18n="pt2">POINT 2</div>
+            <div class="row">
+                <div style="flex:1"><label class="lbl-small" data-i18n="wind">Vent (m/s)</label><input type="number" id="set-v2" step="1" onchange="window.saveGlobalCoefs()"></div>
+                <div style="flex:1"><label class="lbl-small" data-i18n="lbl_weight_kg">Poids (kg)</label><input type="number" id="set-m2" step="0.01" onchange="window.saveGlobalCoefs()"></div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:15px;">
+             <div style="flex:1"><label class="lbl-small" data-i18n="ref_surf">Ref. Surf (dm²)</label><input type="number" id="set-ref-area" step="1" onchange="window.saveGlobalCoefs()"></div>
+             <div style="flex:1"></div>
+        </div>
+
+        <h2 data-i18n="data_title" style="margin-top:20px;">DONNÉES & SAUVEGARDE</h2>
+        <button class="btn btn-dark" onclick="window.exportData('all')" data-i18n="export_all">EXPORTER TOUT (.json)</button>
+        <button class="btn btn-outline" onclick="window.triggerImport()" data-i18n="import_btn">IMPORTER</button>
+    </div>
+    <div class="copyright">© 2026 F3F Manager</div>
+    <button class="btn btn-outline" onclick="history.back()" data-i18n="back">RETOUR</button>
+</div>
+
+<div id="view-calc" class="hidden">
+    <div class="row" style="justify-content:space-between; margin-bottom:10px;">
+        <button class="btn btn-outline" style="width:auto; padding:8px 15px;" onclick="history.back()" data-i18n="back">RETOUR</button>
+        <button class="btn btn-outline" style="width:auto; padding:8px 15px;" onclick="window.editCurrentGlider()" data-i18n="config">CONFIG</button>
+    </div>
+    <h1 id="calc-title">...</h1>
+    
+    <div class="stats-bar">
+        <div class="stat-group"><span class="stat-label" data-i18n="stat_target">CIBLE</span><span class="stat-val" id="res-sim-target" style="color:var(--text-muted);">0.000</span></div>
+        <div class="stat-group"><span class="stat-label" data-i18n="stat_current">ACTUEL</span><span class="stat-val-hero" id="res-weight">0.000</span><span class="stat-tiny" id="res-loading">---</span></div>
+        <div class="stat-group"><span class="stat-label" data-i18n="stat_cg">CG (mm)</span><div class="row" style="justify-content:center; align-items:baseline; gap:5px;"><span class="stat-val" id="res-cg">0.0</span><span id="cg-diff-display" style="font-size:0.9rem; font-weight:bold;"></span></div><span class="stat-tiny" id="res-target-cg-disp"></span></div>
+    </div>
+    <div class="bar-bg"><div class="bar-fill" id="bar-weight"></div></div>
+    
+    <div class="card dyno-card">
+        <div class="row" style="margin-bottom:5px;">
+            <div style="flex:1">
+                <label class="dyno-label" data-i18n="wind">Vent (m/s)</label>
+                <input type="number" id="inp-wind" step="0.1" oninput="window.syncInputs('wind', this.value)">
+                <input type="range" id="rng-wind" min="0" max="25" step="0.5" oninput="window.syncInputs('wind', this.value)">
+            </div>
+            <div style="flex:1">
+                <label class="dyno-label" data-i18n="factor">Facteur %</label>
+                <input type="number" id="inp-factor" oninput="window.syncInputs('factor', this.value)">
+                <input type="range" id="rng-factor" min="50" max="150" step="5" oninput="window.syncInputs('factor', this.value)">
+            </div>
+        </div>
+        <button class="btn btn-magic" onclick="window.autoFillBallast()" data-i18n="optimize">🪄 OPTIMISER</button>
+    </div>
+    
+    <div id="nose-ballast-container"></div>
+    <div id="calc-list"></div>
+    
+    <button class="btn btn-danger-outline" onclick="window.confirmResetLoadout()" data-i18n="clear_all">Tout Vider</button>
+    <div class="card" style="margin-top:20px;">
+        <input type="text" id="inp-slope" placeholder="Pente" data-i18n-ph="ph_slope" style="margin-bottom:10px;">
+        <button class="btn btn-log" onclick="window.openSaveLogModal()" data-i18n="save_flight">💾 ENREGISTRER</button>
+    </div>
+</div>
+
+<div id="view-edit" class="hidden">
+    <h2 data-i18n="edit_title">ÉDITION</h2>
+    <div class="card">
+        <label class="lbl-small" data-i18n="lbl_name">Nom</label><input type="text" id="edit-name">
+        <div class="row" style="margin-top:10px;"><div><label class="lbl-small" data-i18n="lbl_empty_w">Poids Vide</label><input type="number" id="edit-empty-w"></div><div><label class="lbl-small" data-i18n="lbl_empty_cg">CG Vide</label><input type="number" id="edit-empty-cg"></div></div>
+        <div class="row" style="margin-top:10px;"><div><label class="lbl-small" data-i18n="lbl_area">Surf. dm²</label><input type="number" id="edit-area"></div><div><label class="lbl-small" data-i18n="lbl_target_cg">CG Cible</label><input type="number" id="edit-target"></div></div>
+        <div style="margin-top:10px;">
+             <div class="row">
+                 <div style="flex:0 0 50px; display:flex; flex-direction:column; align-items:center;">
+                     <label class="lbl-small" data-i18n="lbl_color">Col</label>
+                     <input type="color" id="edit-nose-color" style="width:100%; height:35px; border:none; padding:0; background:none; cursor:pointer; margin-top:2px;">
+                     <div onclick="window.resetColor('nose')" style="font-size:0.8rem; cursor:pointer; color:var(--text-muted); margin-top:4px;">↺</div>
+                 </div>
+                 <div style="flex:1">
+                     <label class="lbl-small" data-i18n="lbl_nose_dist">Dist. Nez</label>
+                     <input type="number" id="edit-nose-dist" style="border-width:2px;">
+                 </div>
+             </div>
+        </div>
+    </div>
+    <div class="section-title" data-i18n="chambers_title">Chambres</div>
+    <div id="edit-chambers-list"></div>
+    <button class="btn btn-outline" style="border-style:dashed" onclick="window.addChamberLine()" data-i18n="add_chamber">+ Ajouter Chambre</button>
+    <div style="margin-top:20px;">
+        <button class="btn btn-success" onclick="window.saveGlider()" data-i18n="save">SAUVEGARDER</button>
+        <button class="btn btn-info" onclick="window.duplicateGlider()" data-i18n="duplicate_model">DUPLIQUER</button>
+        <button class="btn btn-dark" onclick="window.exportData('model')" data-i18n="export_model">EXPORTER MODÈLE</button>
+        <button class="btn btn-outline" onclick="history.back()" data-i18n="cancel">ANNULER</button>
+        <button class="btn btn-danger-outline" onclick="window.confirmDeleteGlider()" data-i18n="delete_model">SUPPRIMER</button>
+    </div>
+</div>
+
+<div id="view-logbook" class="hidden">
+    <div class="row header-row">
+        <button class="btn btn-outline small-btn" onclick="history.back()" data-i18n="back">⬅ RETOUR</button>
+        <div style="font-weight:bold; color:var(--text);" data-i18n="logbook_title">JOURNAL</div>
+        <button class="btn btn-success small-btn" onclick="window.exportLogsCSV()">CSV</button>
+    </div>
+    <div class="row" style="margin-bottom:15px;"><select id="filter-model" onchange="window.renderLogs()"></select><select id="filter-slope" onchange="window.renderLogs()"></select></div>
+    <div id="logs-container"></div>
+    <div class="row"><button class="btn btn-outline" onclick="history.back()" data-i18n="back">RETOUR</button></div>
+</div>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Service Worker enregistré !', reg))
+                .catch(err => console.log('Erreur Service Worker :', err));
+        });
+    }
+</script>
+
+</body>
+</html>
