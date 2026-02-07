@@ -1,4 +1,4 @@
-const CACHE_NAME = 'f3f-manager-v5.24.toto';
+const CACHE_NAME = 'f3f-manager-v5.25';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -41,5 +41,4 @@ self.addEventListener('fetch', (evt) => {
             return cacheRes || fetch(evt.request);
         })
     );
-
 });
