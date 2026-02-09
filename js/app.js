@@ -1,4 +1,5 @@
 /* --- DICTIONNAIRE DE TRADUCTION --- */
+
 const dict = {
     fr: {
         new_model: "+ NOUVEAU MODÈLE", logbook_btn: "📓 JOURNAL DES VOLS", back: "RETOUR", config: "CONFIG",
@@ -8,29 +9,16 @@ const dict = {
         lbl_tol_cg_plus: "Tol. CG + (mm)", lbl_tol_cg_min: "Tol. CG - (mm)",
         gl_desc: "Définissez la courbe de ballastage pour un planeur standard.",
         pt1: "POINT 1 (Léger/Vide)", pt2: "POINT 2 (Lourd/Max)", lbl_weight_kg: "Poids (kg)",
-        ref_surf: "Surface Référence (dm²)", res_int: "Résultat interne:",
+        ref_surf: "Surface Référence (dm²) FAI", res_int: "Résultat interne:",
         stat_target: "CIBLE", stat_current: "ACTUEL", stat_cg: "CG (mm)", wind: "Vent (m/s)", factor: "Facteur %", optimize: "🪄 OPTIMISER",
         clear_all: "Tout Vider", ph_slope: "Pente", ph_time: "Chrono", save_flight: "💾 ENREGISTRER",
         mass_g: "MASSE (g)", adj_cg: "Ajust. CG",
-        
-        edit_title: "ÉDITION DU MODÈLE", 
-        lbl_name: "Nom du modèle", 
-        lbl_empty_w: "Poids à vide (g)", 
-        lbl_empty_cg: "Centrage à vide (mm)", 
-        lbl_area: "Surface Ailaire (dm²)", 
-        lbl_target_cg: "Centrage Cible (mm)",
+        edit_title: "ÉDITION DU MODÈLE", lbl_name: "Nom du modèle", lbl_empty_w: "Poids à vide (g)", lbl_empty_cg: "Centrage à vide (mm)", 
+        lbl_area: "Surface Alaire (dm²) FAI", lbl_target_cg: "Centrage Cible (mm)",
         desc_nose: "Distance mesurée entre la soute de nez et le Bord d'Attaque.",
-        chambers_title: "CONFIGURATION DES BALLASTS", 
-        add_chamber: "+ Ajouter une soute", 
-        lbl_color: "Coul.",
-        lbl_ch_name: "Nom Soute",
-        lbl_grp: "Lien Stock (ID)", 
-        lbl_dist: "Dist. Bord d'Attaque (mm)", 
-        lbl_max: "Capacité Max (Qté)", 
-        lbl_unit_mass: "Poids d'un élément (g)", 
-        lbl_stock: "Stock Disponible (Qté)", 
-        ph_stock: "Stock",
-
+        chambers_title: "CONFIGURATION DES BALLASTS", add_chamber: "+ Ajouter une soute", lbl_color: "Coul.",
+        lbl_ch_name: "Nom Soute", lbl_grp: "Lien (ID)", lbl_dist: "Dist. Bord d'Attaque", 
+        lbl_max: "Capacité Max (Qté)", lbl_unit_mass: "Poids d'un élément (g)", lbl_stock: "Stock Disponible (Qté)", ph_stock: "Stock",
         save: "SAUVEGARDER", cancel: "ANNULER", delete_model: "SUPPRIMER",
         duplicate_model: "DUPLIQUER", copy_suffix: " (Copie)", export_model: "EXPORTER MODÈLE",
         logbook_title: "JOURNAL", help_title: "AIDE", mat_brass: "LAITON", mat_lead: "PLOMB", mat_tung: "TUNG.",
@@ -50,7 +38,6 @@ const dict = {
     <li><strong>Journal des Vols :</strong> Accès à l'historique de vos sessions passées.</li>
     <li><strong>Icônes du haut :</strong> Le "?" ouvre l'aide rapide et l'icône "Engrenage" ouvre les réglages globaux.</li>
 </ul>
-
 <h3>2. Création et Édition d'un Modèle (Vue "CONFIG")</h3>
 <p>C’est l'étape la plus importante pour la précision des calculs.</p>
 <ul>
@@ -64,62 +51,33 @@ const dict = {
     <li><strong>Dist :</strong> La distance entre le centre de la chambre et le bord d’attaque. Positif pour l’arrière, négatif pour la soute de nez.</li>
     <li><strong>Qté Max :</strong> Nombre de gueuses que la chambre peut contenir.</li>
     <li><strong>Masses Unitaires :</strong> Le poids d'une seule gueuse pour chaque matière (Laiton, Plomb, Tungstène).</li>
-    <li><strong>Stock :</strong> Indiquez combien de gueuses vous possédez réellement pour chaque matière. Si vous laissez vide ou mettez 0, la colonne n'apparaîtra pas dans le calculateur.</li>
-    <li><strong>Soute nez :</strong> Cette soute ne rentre pas en compte dans l’optimisation. Elle est présente à titre indicatif. Vous pouvez soit retirer soit rajouter du plomb pour ajuster le CG.</li>
-    <li><strong>Distance Soute Nez :</strong> Indiquez la distance entre la soute de nez et le Bord d'Attaque (le calcul additionnera cette distance au CG pour trouver le bras de levier).</li>
+    <li><strong>Stock :</strong> Indiquez combien de gueuses vous possédez réellement pour chaque matière.</li>
+    <li><strong>Soute nez :</strong> Cette soute ne rentre pas en compte dans l’optimisation. Elle est présente à titre indicatif.</li>
+    <li><strong>Distance Soute Nez :</strong> Indiquez la distance entre la soute de nez et le Bord d'Attaque.</li>
 </ul>
-
 <h3>3. Le Calculateur (Vue "Optimisation")</h3>
-<p>C’est la vue que vous utiliserez sur la pente.</p>
 <ul>
     <li><strong>Vent (m/s) :</strong> Entrez la force du vent mesurée.</li>
-    <li><strong>Facteur % :</strong> Permet d'ajuster la charge. Ex : 100% pour un ballast standard, 85% si la pente ne porte pas, 110% si la pente porte énormément.</li>
-    <li><strong>Cible (Zone grise) :</strong> Le poids total idéal calculé par l'algorithme selon le vent et la surface du planeur.</li>
-    <li><strong>Actuel (Zone centrale) :</strong> Affiche votre poids total en temps réel et votre charge alaire (g/dm²).</li>
-    <li><strong>CG (mm) :</strong> Affiche le CG résultant de votre ballastage. Il devient VERT s'il est dans vos tolérances, ROUGE s'il s'en éloigne trop.</li>
+    <li><strong>Facteur % :</strong> Permet d'ajuster la charge (100% standard).</li>
+    <li><strong>Cible :</strong> Le poids total idéal calculé.</li>
+    <li><strong>CG (mm) :</strong> Devient VERT s'il est dans vos tolérances, ROUGE s'il s'en éloigne trop.</li>
 </ul>
-
 <h3>4. L'Optimisation Automatique (Baguette Magique)</h3>
-<p>Le bouton "Optimiser" remplit automatiquement vos chambres en quelques millisecondes.</p>
 <ul>
     <li><strong>Priorité n°1 :</strong> Ne jamais dépasser vos tolérances de sécurité.</li>
-    <li><strong>Priorité n°2 :</strong> Obtenir le CG le plus proche possible de votre cible (quitte à mettre moins de poids).</li>
+    <li><strong>Priorité n°2 :</strong> Obtenir le CG le plus proche possible de votre cible.</li>
     <li><strong>Priorité n°3 :</strong> Atteindre le poids cible.</li>
 </ul>
-<p><strong>Astuce :</strong> Le mode manuel est toujours actif quelque soit les paramètres. Ajustez manuellement les plombs en cliquant sur les noms des chambres pour les dérouler.</p>
-
 <h3>5. Enregistrement des Vols</h3>
-<p>En bas du calculateur, vous pouvez documenter votre vol.</p>
 <ul>
     <li><strong>Pente :</strong> Le nom du lieu.</li>
     <li><strong>Chrono :</strong> Votre temps sur la base (ex: 35.52).</li>
-    <li><strong>Note :</strong> Appuyez sur "Enregistrer" pour ouvrir une fenêtre de commentaire (ex: Ressenti un peu arrière, Conditions stables).</li>
+    <li><strong>Note :</strong> Appuyez sur "Enregistrer" pour ouvrir une fenêtre de commentaire.</li>
 </ul>
-<p>Le vol est alors sauvegardé avec le poids exact, le CG et le lieu de ce moment-là.</p>
-
 <h3>6. Paramètres Globaux (⚙️)</h3>
-<p>Réglages pour personnaliser le comportement de l'app.</p>
 <ul>
-    <li><strong>Tolérances Poids/CG :</strong> Définit à partir de quand les chiffres deviennent rouges. Ex : Une tolérance CG de 0.5mm est stricte, 2mm est plus souple.</li>
-    <li><strong>Coefficients A et B :</strong> Définit la "nervosité" du ballastage.</li>
-    <ul>
-        <li><strong>Valeurs par défaut :</strong> Ballastage lourd (typé compétition F3F bord de mer).</li>
-        <li><strong>Valeurs Aeromod (A=0.1 / B=2.0) :</strong> Plus adapté au vol de pente loisir/montagne.</li>
-    </ul>
-    <li><strong>Surface de Référence :</strong> La surface sur laquelle est basée la formule (généralement 62 dm² pour un planeur de 2300gr et 2m90 d’envergure). Ne la changez que si vous voulez redéfinir toute votre logique de calcul.</li>
-</ul>
-
-<h3>7. Journal et Export</h3>
-<ul>
-    <li><strong>Filtres :</strong> Vous pouvez trier vos vols par modèle ou par pente.</li>
-    <li><strong>Bouton CSV :</strong> Exporte tout votre historique. Vous pouvez le coller dans un Excel ou l'envoyer par email pour analyser vos performances à tête reposée.</li>
-</ul>
-
-<h3>8. Mode Hors-Ligne (Zone Blanche)</h3>
-<p>L'application est conçue pour fonctionner sans internet une fois la première visite effectuée.</p>
-<ul>
-    <li><strong>Installation :</strong> Sur iPhone, utilisez Safari > Partager > "Sur l'écran d'accueil".</li>
-    <li><strong>Utilisation :</strong> L'icône apparaît sur votre téléphone. Même en mode avion au sommet d'une montagne, vos données et le calculateur restent 100% fonctionnels. Toutes les données sont stockées localement dans votre téléphone.</li>
+    <li><strong>Tolérances Poids/CG :</strong> Définit à partir de quand les chiffres deviennent rouges.</li>
+    <li><strong>Coefficients A et B :</strong> Valeurs par défaut (F3F compétition) ou Aeromod (A=0.1 / B=2.0).</li>
 </ul>
 `
     },
@@ -134,23 +92,12 @@ const dict = {
         stat_target: "TARGET", stat_current: "CURRENT", stat_cg: "CG (mm)", wind: "Wind (m/s)", factor: "Factor %", optimize: "🪄 OPTIMIZE",
         clear_all: "Clear All", ph_slope: "Slope", ph_time: "Time", save_flight: "💾 SAVE FLIGHT",
         mass_g: "MASS (g)", adj_cg: "CG Adj.",
-        edit_title: "EDIT MODEL", 
-        lbl_name: "Model Name", 
-        lbl_empty_w: "Empty Weight (g)", 
-        lbl_empty_cg: "Empty CG (mm)", 
-        lbl_area: "Wing Area (dm²)", 
-        lbl_target_cg: "Target CG (mm)",
+        edit_title: "EDIT MODEL", lbl_name: "Model Name", lbl_empty_w: "Empty Weight (g)", lbl_empty_cg: "Empty CG (mm)", 
+        lbl_area: "Wing Area (dm²) FAI", lbl_target_cg: "Target CG (mm)",
         desc_nose: "Distance between nose ballast and Leading Edge.",
-        chambers_title: "BALLAST CHAMBERS", 
-        add_chamber: "+ Add Chamber", 
-        lbl_color: "Col.",
-        lbl_ch_name: "Chamber Name",
-        lbl_grp: "Stock Link (ID)", 
-        lbl_dist: "Dist. to LE (mm)", 
-        lbl_max: "Max Cap. (Qty)", 
-        lbl_unit_mass: "Unit Mass (g)", 
-        lbl_stock: "Stock Avail. (Qty)", 
-        ph_stock: "Stock",
+        chambers_title: "BALLAST CHAMBERS", add_chamber: "+ Add Chamber", lbl_color: "Col.",
+        lbl_ch_name: "Chamber Name", lbl_grp: "Link (ID)", lbl_dist: "Dist. to LE (mm)", 
+        lbl_max: "Max Cap. (Qty)", lbl_unit_mass: "Unit Mass (g)", lbl_stock: "Stock Avail. (Qty)", ph_stock: "Stock",
         save: "SAVE", cancel: "CANCEL", delete_model: "DELETE MODEL",
         duplicate_model: "DUPLICATE", copy_suffix: " (Copy)", export_model: "EXPORT MODEL",
         logbook_title: "LOGBOOK", help_title: "HELP", mat_brass: "BRASS", mat_lead: "LEAD", mat_tung: "TUNG.",
@@ -161,7 +108,38 @@ const dict = {
         export_all: "EXPORT ALL (.json)", import_btn: "IMPORT",
         msg_import_success: "Import successful!", msg_import_err: "Error importing.",
         msg_replace_all: "Replace all data?", msg_add_model: "Model detected: ", msg_add_model_q: "Add to list?",
-        help_html: `<h3>1. Home</h3><ul><li>List, New Model, Logs.</li></ul><h3>2. Config</h3><ul><li>Empty Weight/CG: Without ballast.</li><li>Use 'Stock Link' ID to share ballast between chambers.</li></ul><h3>3. Calculator</h3><ul><li>Set Wind & Factor.</li><li>Press Optimize to fill ballast automatically.</li></ul>`
+        help_html: `
+<h3>1. Home (Fleet Management)</h3>
+<ul>
+    <li><strong>Glider List:</strong> Registered models. Tap to open calculator.</li>
+    <li><strong>"+" Button:</strong> Create new model sheet.</li>
+    <li><strong>Logs:</strong> Your session history.</li>
+</ul>
+<h3>2. Configuration ("CONFIG" View)</h3>
+<ul>
+    <li><strong>Empty Weight/CG:</strong> Measured without ballast.</li>
+    <li><strong>FAI Area:</strong> Total surface. Used for calculation rule.</li>
+    <li><strong>Target CG:</strong> Your ideal flying CG.</li>
+</ul>
+<p><strong>Ballast Chambers:</strong></p>
+<ul>
+    <li><strong>Dist:</strong> Distance from LE. Positive for rear, negative for nose.</li>
+    <li><strong>Max Qty:</strong> Number of slugs per chamber.</li>
+    <li><strong>Stock:</strong> Amount you actually own.</li>
+</ul>
+<h3>3. Calculator ("Optimization" View)</h3>
+<ul>
+    <li><strong>Wind (m/s):</strong> Current wind speed.</li>
+    <li><strong>Factor %:</strong> Load adjustment (100% is standard).</li>
+    <li><strong>Target:</strong> Calculated ideal weight.</li>
+    <li><strong>CG (mm):</strong> GREEN if ok, RED if out of range.</li>
+</ul>
+<h3>4. Auto-Optimization (Magic Wand)</h3>
+<ul>
+    <li><strong>Priority #1:</strong> Never exceed safety tolerances.</li>
+    <li><strong>Priority #2:</strong> Get CG as close as possible to target.</li>
+</ul>
+`
     },
     es: {
         new_model: "+ NUEVO MODELO", logbook_btn: "📓 REGISTRO DE VUELOS", back: "VOLVER", config: "CONFIG",
@@ -174,23 +152,12 @@ const dict = {
         stat_target: "OBJETIVO", stat_current: "ACTUAL", stat_cg: "CDG (mm)", wind: "Viento (m/s)", factor: "Factor %", optimize: "🪄 OPTIMIZAR",
         clear_all: "Vaciar Todo", ph_slope: "Ladera", ph_time: "Crono", save_flight: "💾 GUARDAR VUELO",
         mass_g: "MASA (g)", adj_cg: "Ajuste CDG",
-        edit_title: "EDITAR MODELO", 
-        lbl_name: "Nombre del modelo", 
-        lbl_empty_w: "Peso en vacío (g)", 
-        lbl_empty_cg: "CDG en vacío (mm)", 
-        lbl_area: "Superficie Alar (dm²)", 
-        lbl_target_cg: "CDG Objetivo (mm)",
+        edit_title: "EDITAR MODELO", lbl_name: "Nombre del modelo", lbl_empty_w: "Peso en vacío (g)", lbl_empty_cg: "CDG en vacío (mm)", 
+        lbl_area: "Superficie Alar (dm²) FAI", lbl_target_cg: "CDG Objetivo (mm)",
         desc_nose: "Distancia entre el lastre de morro y el Borde de Ataque.",
-        chambers_title: "CONFIGURACIÓN DE LASTRES", 
-        add_chamber: "+ Añadir Cámara", 
-        lbl_color: "Col.",
-        lbl_ch_name: "Nombre Cámara",
-        lbl_grp: "Vincular Stock (ID)", 
-        lbl_dist: "Dist. Borde Ataque (mm)", 
-        lbl_max: "Capacidad Máx (Cant)", 
-        lbl_unit_mass: "Peso unitario (g)", 
-        lbl_stock: "Stock Dispon. (Cant)", 
-        ph_stock: "Stock",
+        chambers_title: "CONFIGURACIÓN DE LASTRES", add_chamber: "+ Añadir Cámara", lbl_color: "Col.",
+        lbl_ch_name: "Nombre Cámara", lbl_grp: "Vincular(ID)", lbl_dist: "Dist. Borde Ataque", 
+        lbl_max: "Capacidad Máx (Cant)", lbl_unit_mass: "Peso unitario (g)", lbl_stock: "Stock Dispon. (Cant)", ph_stock: "Stock",
         save: "GUARDAR", cancel: "CANCELAR", delete_model: "ELIMINAR",
         duplicate_model: "DUPLICAR", copy_suffix: " (Copia)", export_model: "EXPORTAR MODELO",
         logbook_title: "REGISTRO", help_title: "AYUDA", mat_brass: "LATÓN", mat_lead: "PLOMO", mat_tung: "TUNGST.",
@@ -201,7 +168,25 @@ const dict = {
         export_all: "EXPORTAR TODO (.json)", import_btn: "IMPORTAR",
         msg_import_success: "¡Importación exitosa!", msg_import_err: "Error al importar.",
         msg_replace_all: "¿Reemplazar todos los datos?", msg_add_model: "Modelo detectado: ", msg_add_model_q: "¿Añadir a la lista?",
-        help_html: `<h3>1. Inicio (Flota)</h3><ul><li>Lista: Modelos guardados. Toque para abrir el calculador.</li><li>"+": Crear nuevo modelo.</li><li>Registro: Historial de vuelos.</li></ul><h3>2. Configuración</h3><ul><li>Peso/CDG Vacío: Medidos sin lastre.</li><li>CDG Objetivo: El CDG ideal de vuelo.</li></ul><p><strong>Cámaras de Lastre:</strong></p><ul><li>Dist: Distancia (mm) al Borde de Ataque.</li><li>Stock: "0" para ocultar. "999" para ilimitado.</li><li>Vincular (ID): Use el mismo ID para compartir el stock físico.</li></ul><h3>3. Calculador</h3><ul><li>Viento: Velocidad medida.</li><li>Objetivo: Peso ideal calculado.</li><li>Actual: Peso real con lastre.</li><li>Optimizar 🪄: Calcula la mejor carga automáticamente.</li></ul>`
+        help_html: `
+<h3>1. Inicio (Gestión de flota)</h3>
+<ul>
+    <li><strong>Lista:</strong> Modelos guardados. Toque para abrir el calculador.</li>
+    <li><strong>"+":</strong> Crear nuevo modelo.</li>
+    <li><strong>Registro:</strong> Historial de vuelos.</li>
+</ul>
+<h3>2. Configuración (Vista "CONFIG")</h3>
+<ul>
+    <li><strong>Peso/CDG Vacío:</strong> Medidos sin lastre.</li>
+    <li><strong>Superficie Alar:</strong> Usada para el cálculo de carga.</li>
+</ul>
+<h3>3. Calculador ("Optimización")</h3>
+<ul>
+    <li><strong>Viento (m/s):</strong> Velocidad medida.</li>
+    <li><strong>Objetivo:</strong> Peso ideal calculado automáticamente.</li>
+    <li><strong>CDG (mm):</strong> VERDE si es ok, ROJO si está fuera de rango.</li>
+</ul>
+`
     }
 };
 
