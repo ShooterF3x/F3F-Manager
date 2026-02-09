@@ -1,5 +1,5 @@
 /* --- DICTIONNAIRE DE TRADUCTION --- */
-
+/*alert("LE FICHIER JS EST CHARGÉ !");*/
 const dict = {
     fr: {
         new_model: "+ NOUVEAU MODÈLE", logbook_btn: "📓 JOURNAL DES VOLS", back: "RETOUR", config: "CONFIG",
@@ -223,8 +223,106 @@ function calculateAB() {
     const elB = document.getElementById('disp-coef-b');
     if(elA) elA.innerText = globalCoefs.a.toFixed(3);
     if(elB) elB.innerText = globalCoefs.b.toFixed(3);
+    updateSettingsChart();
 }
 
+
+let settingsChart = null;
+
+/* --- FONCTION DESSIN "NUCLÉAIRE" (Supprime et recrée) --- */
+function updateSettingsChart() {
+    console.log("--> CHARGEMENT COURBE ORANGE...");
+
+    // 1. On récupère le conteneur (la div autour du canvas)
+    // IMPORTANT : Assure-toi que ton canvas est bien dans une div parent dans index.html
+    const canvas = document.getElementById('settings-chart');
+    if (!canvas) return;
+    
+    const parentContainer = canvas.parentElement; 
+
+    // 2. SUPPRESSION TOTALE
+    // On vide le conteneur. L'ancien graphique est détruit avec le HTML.
+    parentContainer.innerHTML = ''; 
+
+    // 3. RECRÉATION DU CANVAS
+    // On remet un canvas tout neuf
+    const newCanvas = document.createElement('canvas');
+    newCanvas.id = 'settings-chart';
+    newCanvas.style.width = '100%';
+    newCanvas.style.height = '200px'; // Hauteur forcée
+    parentContainer.appendChild(newCanvas);
+
+    // 4. CALCUL DES DONNÉES
+    const labels = [];
+    const dataUser = [];
+    const dataRef = [];
+
+    for (let i = 0; i <= 25; i++) {
+        labels.push(i);
+        // Ta courbe (Bleue)
+        let vUser = (globalCoefs.a * i + globalCoefs.b);
+        dataUser.push(vUser < 0 ? 0 : vUser);
+        
+        // Courbe Aeromod (Orange)
+        let vRef = (0.1 * i + 2.0);
+        dataRef.push(vRef);
+    }
+
+    // 5. DESSIN
+    new Chart(newCanvas, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Ma Config',
+                    data: dataUser,
+                    borderColor: '#0d6efd',
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 0,
+                    pointHitRadius: 20,
+                    order: 1
+                },
+                {
+                    label: 'Ref. Aeromod',
+                    data: dataRef,
+                    borderColor: '#ff9800', // ORANGE VIF
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    tension: 0.3,
+                    fill: false,
+                    pointRadius: 0,
+                    pointHitRadius: 0,
+                    order: 0
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false, // Affichage instantané
+            interaction: {
+                mode: 'index',      // Affiche les infos partout sur l'axe X
+                intersect: false,   // Pas besoin de toucher la ligne
+            },
+            plugins: {
+                legend: { display: true },
+                tooltip: {
+                    callbacks: {
+                        title: (items) => 'Vent : ' + items[0].label + ' m/s'
+                    }
+                }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Vent (m/s)' } },
+                y: { title: { display: true, text: 'Poids (kg)' } }
+            }
+        }
+    });
+}
 function getCalculatedTargetWeight(w, f, gliderArea) {
     if (isNaN(w) || isNaN(f)) return 0;
     let baseTarget = (globalCoefs.a * w + globalCoefs.b) * 1000;
@@ -776,6 +874,118 @@ function initApp() {
     document.getElementById('theme-select').value = currentTheme; 
     updateUITexts(); 
     showView('home');
+
+    /* --- FONCTION DESSIN GRAPHIQUE --- */
+/* --- FONCTION DESSIN GRAPHIQUE (Version Fluide) --- */
+/* --- FONCTION DESSIN GRAPHIQUE (Comparatif Aeromod) --- */
+/* --- FONCTION DESSIN GRAPHIQUE (Corrigée & Visible) --- */
+/* --- FONCTION DESSIN GRAPHIQUE (Version "Bulldozer") --- */
+let settingsChart = null;
+
+/* --- FONCTION DESSIN GRAPHIQUE (Version Blindée) --- */
+function updateSettingsChart() {
+    console.log("--> CHARGEMENT DU GRAPHIQUE ORANGE...");
+    const ctx = document.getElementById('settings-chart');
+    if (!ctx) return;
+
+    // 1. DÉTECTION ET DESTRUCTION (Méthode radicale)
+    // On demande à Chart.js s'il y a déjà un graphique sur ce canvas
+    const existingChart = Chart.getChart(ctx);
+    if (existingChart) {
+        existingChart.destroy(); // On le détruit totalement
+    }
+
+    // 2. PRÉPARATION DES DONNÉES (De 0 à 25, tous les 1 m/s)
+    const labels = [];      // Axe X (0, 1, 2...)
+    const dataUser = [];    // Ta courbe
+    const dataRef = [];     // Ref Aeromod
+    
+    for (let i = 0; i <= 25; i++) { 
+        labels.push(i);
+        
+        // Calcul TA courbe (Bleue)
+        let valUser = (globalCoefs.a * i + globalCoefs.b);
+        dataUser.push(valUser < 0 ? 0 : valUser); // On garde le chiffre exact (float)
+
+        // Calcul Ref AEROMOD (Orange) : y = 0.1x + 2.0
+        let valRef = (0.1 * i + 2.0);
+        dataRef.push(valRef);
+    }
+
+    // 3. CRÉATION DU NOUVEAU GRAPHIQUE
+    // Sécurité : Vérifie que la librairie est chargée
+    if (typeof Chart === 'undefined') return;
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels, // 0, 1, 2, ... 25
+            datasets: [
+                {
+                    label: 'Ma Config',
+                    data: dataUser,
+                    borderColor: '#0d6efd', // Bleu
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 0,       // Pas de points visibles
+                    pointHitRadius: 20,   // Zone de détection large
+                    order: 1
+                },
+                {
+                    label: 'Ref. Aeromod',
+                    data: dataRef,
+                    borderColor: '#ff9800', // Orange Vif
+                    borderWidth: 2,
+                    borderDash: [5, 5],     // Pointillés
+                    tension: 0.3,
+                    fill: false,
+                    pointRadius: 0,
+                    pointHitRadius: 0,      // On ne clique pas dessus
+                    order: 0                // Dessiné par-dessus
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false, // Pas d'animation pour l'instantanéité
+            interaction: {
+                mode: 'index',    // Affiche les infos de l'axe X (toutes les courbes)
+                intersect: false, // Pas besoin de toucher la ligne !
+            },
+            plugins: { 
+                legend: { display: true, labels: { color: '#ccc' } },
+                tooltip: {
+                    displayColors: true,
+                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    callbacks: {
+                        title: (items) => 'Vent : ' + items[0].label + ' m/s',
+                        label: (item) => {
+                            // Formatage propre : "Ma Config : 2.50 kg"
+                            return item.dataset.label + ' : ' + Number(item.raw).toFixed(2) + ' kg';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: { 
+                    title: { display: true, text: 'Vent (m/s)', color:'#666' },
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#888' }
+                },
+                y: { 
+                    title: { display: true, text: 'Poids (kg)', color:'#666' },
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#888' }
+                }
+            }
+        }
+    });
+}
 }
 
 window.addEventListener('load', initApp);

@@ -1,11 +1,13 @@
-const CACHE_NAME = 'f3f-manager-v5.998'; // J'ai changé le numéro pour forcer la mise à jour
+const CACHE_NAME = 'f3f-manager-v5.993'; // J'ai changé le numéro pour forcer la mise à jour
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './css/style.css',
     './js/app.js',
     './manifest.json',
-    './icon.png'
+    './icon.png',
+    'https://cdn.jsdelivr.net/npm/chart.js'
+    
 ];
 
 self.addEventListener('install', (evt) => {
