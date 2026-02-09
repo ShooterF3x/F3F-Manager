@@ -32,7 +32,7 @@ Application web légère pour la gestion du ballastage et du centrage des planeu
 ## 📲 Installation rapide
 
 1. Héberger les fichiers sur **GitHub Pages**.
-2. Lancer l'URL sur votre smartphone.
+2. Lancer l'URL sur votre smartphone. https://shooterf3x.github.io/F3F-Manager/
 3. **Sur iOS :** `Partager` > `Sur l'écran d'accueil`.
 4. **Sur Android :** `Menu` > `Installer l'application`.
 
