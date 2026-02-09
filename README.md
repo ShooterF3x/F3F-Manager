@@ -1,6 +1,6 @@
 # 🚀 F3F Manager
 
-![Version](https://img.shields.io/badge/version-5.30-blue)
+![Version](https://img.shields.io/badge/version-5.25-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![PWA](https://img.shields.io/badge/PWA-Ready-purple)
 
