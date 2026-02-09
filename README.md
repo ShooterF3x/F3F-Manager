@@ -1,36 +1,47 @@
-F3F Manager
-Application web (PWA) de gestion de ballast et centrage pour planeurs de compétition F3F. Permet d'optimiser la charge alaire en fonction du vent tout en respectant les tolérances de centrage (CG).
+# 🚀 F3F Manager
 
-Fonctions principales
-Gestion de flotte : Création de fiches techniques par modèle (poids à vide, surface, soutes).
+![Version](https://img.shields.io/badge/version-5.30-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![PWA](https://img.shields.io/badge/PWA-Ready-purple)
 
-Calculateur dynamique : Calcul du poids cible selon la force du vent et un facteur de charge ajustable.
+Application web légère pour la gestion du ballastage et du centrage des planeurs de compétition **F3F**.
 
-Optimisation automatique : Algorithme qui remplit les soutes (Laiton/Plomb/Tungstène) pour atteindre le poids idéal en restant proche du CG cible.
+---
 
-Journal de bord : Enregistrement des vols avec conditions, chronos et notes.
+## 🛠 Fonctions principales
 
-Mode Offline : Fonctionne sans réseau sur le terrain (PWA).
+* **Gestion de flotte :** Création de fiches techniques (poids vide, CG vide, surface).
+* **Calculateur intelligent :** Détermine le poids cible idéal selon la force du vent.
+* **Optimisation automatique :** Algorithme de remplissage des soutes pour coller au poids cible et au CG désiré.
+* **Journal de bord :** Historique des vols, chronos et ressentis.
+* **Mode Offline :** Utilisable sur la pente sans connexion internet (PWA).
 
-Installation
-L'application est statique. Pour l'installer :
+---
 
-Héberger les fichiers sur GitHub Pages (ou n'importe quel serveur web).
+## 📂 Structure du projet
 
-Ouvrir l'URL sur smartphone.
+| Fichier | Rôle |
+| :--- | :--- |
+| **`index.html`** | Squelette de l'interface et gestion des vues. |
+| **`css/style.css`** | Design, thèmes et animations. |
+| **`js/app.js`** | Moteur de calcul et logique de l'application. |
+| **`sw.js`** | Gestion du cache pour le fonctionnement hors-ligne. |
 
-Sur iOS : Partager > "Sur l'écran d'accueil".
+---
 
-Sur Android : Menu > "Installer l'application".
+## 📲 Installation rapide
 
-Structure du projet
-index.html : Structure de l'interface et gestion des vues.
+1. Héberger les fichiers sur **GitHub Pages**.
+2. Lancer l'URL sur votre smartphone.
+3. **Sur iOS :** `Partager` > `Sur l'écran d'accueil`.
+4. **Sur Android :** `Menu` > `Installer l'application`.
 
-css/style.css : Design et thèmes (Cyber, Snow, Flat, Bunker).
+---
 
-js/app.js : Logique de calcul, dictionnaire de traduction et gestion des données (LocalStorage).
+## 🔐 Confidentialité et Données
 
-sw.js : Service Worker pour le cache et l'utilisation hors-ligne.
+Toutes les données sont stockées en local sur votre appareil via le **LocalStorage**. Aucune donnée n'est envoyée vers un serveur externe. Pensez à utiliser la fonction **Export JSON** dans les paramètres pour vos sauvegardes.
 
-Données
-Toutes les données sont stockées localement dans le navigateur. Une fonction d'export/import JSON est disponible dans les paramètres pour les sauvegardes ou le transfert entre appareils.
+---
+
+© 2026 F3F Manager - Développé pour la performance.
