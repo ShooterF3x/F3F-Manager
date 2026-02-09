@@ -24,8 +24,8 @@ const dict = {
         add_chamber: "+ Ajouter une soute", 
         lbl_color: "Coul.",
         lbl_ch_name: "Nom Soute",
-        lbl_grp: "Lien", 
-        lbl_dist: "Dist. Bord d'Attaque ", 
+        lbl_grp: "Lien Stock (ID)", 
+        lbl_dist: "Dist. Bord d'Attaque (mm)", 
         lbl_max: "Capacité Max (Qté)", 
         lbl_unit_mass: "Poids d'un élément (g)", 
         lbl_stock: "Stock Disponible (Qté)", 
@@ -43,85 +43,85 @@ const dict = {
         msg_replace_all: "Attention : Ceci va REMPLACER tous vos modèles et logs actuels. Continuer ?",
         msg_add_model: "Modèle détecté : ", msg_add_model_q: "Voulez-vous l'ajouter à votre liste ?",
         help_html: `
-        <h3>1. Accueil (Gestion de la flotte planeur)</h3>
-        <ul>
-            <li><strong>Liste des planeurs :</strong> Affiche vos modèles enregistrés avec leur poids à vide. Appuyez sur un nom pour ouvrir le calculateur.</li>
-            <li><strong>Bouton "+" (Nouveau Modèle) :</strong> Pour créer une nouvelle fiche technique.</li>
-            <li><strong>Journal des Vols :</strong> Accès à l'historique de vos sessions passées.</li>
-            <li><strong>Icônes du haut :</strong> Le "?" ouvre l'aide rapide et l'icône "Engrenage" ouvre les réglages globaux.</li>
-        </ul>
+<h3>1. Accueil (Gestion de la flotte planeur)</h3>
+<ul>
+    <li><strong>Liste des planeurs :</strong> Affiche vos modèles enregistrés avec leur poids à vide. Appuyez sur un nom pour ouvrir le calculateur.</li>
+    <li><strong>Bouton "+" (Nouveau Modèle) :</strong> Pour créer une nouvelle fiche technique.</li>
+    <li><strong>Journal des Vols :</strong> Accès à l'historique de vos sessions passées.</li>
+    <li><strong>Icônes du haut :</strong> Le "?" ouvre l'aide rapide et l'icône "Engrenage" ouvre les réglages globaux.</li>
+</ul>
 
-        <h3>2. Création et Édition d'un Modèle (Vue "CONFIG")</h3>
-        <p>C’est l'étape la plus importante pour la précision des calculs.</p>
-        <ul>
-            <li><strong>Nom :</strong> Le nom de votre planeur (ex: Pitbull 2, Freestyler 6).</li>
-            <li><strong>Poids Vide & CG Vide :</strong> Le poids et le centre de gravité mesurés sans aucun lest.</li>
-            <li><strong>Surf. dm² FAI :</strong> La surface totale de l'aile et du stab. Elle est utilisée pour la "Règle de 3" par rapport à la surface de référence.</li>
-            <li><strong>CG Cible :</strong> Le CG idéal auquel vous souhaitez voler (l'application cherchera à s'en rapprocher au maximum).</li>
-        </ul>
-        <p><strong>Gestion des Chambres :</strong></p>
-        <ul>
-            <li><strong>Dist :</strong> La distance entre le centre de la chambre et le bord d’attaque. Positif pour l’arrière, négatif pour la soute de nez.</li>
-            <li><strong>Qté Max :</strong> Nombre de gueuses que la chambre peut contenir.</li>
-            <li><strong>Masses Unitaires :</strong> Le poids d'une seule gueuse pour chaque matière (Laiton, Plomb, Tungstène).</li>
-            <li><strong>Stock :</strong> Indiquez combien de gueuses vous possédez réellement pour chaque matière. Si vous laissez vide ou mettez 0, la colonne n'apparaîtra pas dans le calculateur.</li>
-            <li><strong>Soute nez :</strong> Cette soute ne rentre pas en compte dans l’optimisation. Elle est présente à titre indicatif. Vous pouvez soit retirer soit rajouter du plomb pour ajuster le CG.</li>
-            <li><strong>Distance Soute Nez :</strong> Indiquez la distance entre la soute de nez et le Bord d'Attaque (le calcul additionnera cette distance au CG pour trouver le bras de levier).</li>
-        </ul>
+<h3>2. Création et Édition d'un Modèle (Vue "CONFIG")</h3>
+<p>C’est l'étape la plus importante pour la précision des calculs.</p>
+<ul>
+    <li><strong>Nom :</strong> Le nom de votre planeur (ex: Pitbull 2, Freestyler 6).</li>
+    <li><strong>Poids Vide & CG Vide :</strong> Le poids et le centre de gravité mesurés sans aucun lest.</li>
+    <li><strong>Surf. dm² FAI :</strong> La surface totale de l'aile et du stab. Elle est utilisée pour la "Règle de 3" par rapport à la surface de référence.</li>
+    <li><strong>CG Cible :</strong> Le CG idéal auquel vous souhaitez voler (l'application cherchera à s'en rapprocher au maximum).</li>
+</ul>
+<p><strong>Gestion des Chambres :</strong></p>
+<ul>
+    <li><strong>Dist :</strong> La distance entre le centre de la chambre et le bord d’attaque. Positif pour l’arrière, négatif pour la soute de nez.</li>
+    <li><strong>Qté Max :</strong> Nombre de gueuses que la chambre peut contenir.</li>
+    <li><strong>Masses Unitaires :</strong> Le poids d'une seule gueuse pour chaque matière (Laiton, Plomb, Tungstène).</li>
+    <li><strong>Stock :</strong> Indiquez combien de gueuses vous possédez réellement pour chaque matière. Si vous laissez vide ou mettez 0, la colonne n'apparaîtra pas dans le calculateur.</li>
+    <li><strong>Soute nez :</strong> Cette soute ne rentre pas en compte dans l’optimisation. Elle est présente à titre indicatif. Vous pouvez soit retirer soit rajouter du plomb pour ajuster le CG.</li>
+    <li><strong>Distance Soute Nez :</strong> Indiquez la distance entre la soute de nez et le Bord d'Attaque (le calcul additionnera cette distance au CG pour trouver le bras de levier).</li>
+</ul>
 
-        <h3>3. Le Calculateur (Vue "Optimisation")</h3>
-        <p>C’est la vue que vous utiliserez sur la pente.</p>
-        <ul>
-            <li><strong>Vent (m/s) :</strong> Entrez la force du vent mesurée.</li>
-            <li><strong>Facteur % :</strong> Permet d'ajuster la charge. Ex : 100% pour un ballast standard, 85% si la pente ne porte pas, 110% si la pente porte énormément.</li>
-            <li><strong>Cible (Zone grise) :</strong> Le poids total idéal calculé par l'algorithme selon le vent et la surface du planeur.</li>
-            <li><strong>Actuel (Zone centrale) :</strong> Affiche votre poids total en temps réel et votre charge alaire (g/dm²).</li>
-            <li><strong>CG (mm) :</strong> Affiche le CG résultant de votre ballastage. Il devient VERT s'il est dans vos tolérances, ROUGE s'il s'en éloigne trop.</li>
-        </ul>
+<h3>3. Le Calculateur (Vue "Optimisation")</h3>
+<p>C’est la vue que vous utiliserez sur la pente.</p>
+<ul>
+    <li><strong>Vent (m/s) :</strong> Entrez la force du vent mesurée.</li>
+    <li><strong>Facteur % :</strong> Permet d'ajuster la charge. Ex : 100% pour un ballast standard, 85% si la pente ne porte pas, 110% si la pente porte énormément.</li>
+    <li><strong>Cible (Zone grise) :</strong> Le poids total idéal calculé par l'algorithme selon le vent et la surface du planeur.</li>
+    <li><strong>Actuel (Zone centrale) :</strong> Affiche votre poids total en temps réel et votre charge alaire (g/dm²).</li>
+    <li><strong>CG (mm) :</strong> Affiche le CG résultant de votre ballastage. Il devient VERT s'il est dans vos tolérances, ROUGE s'il s'en éloigne trop.</li>
+</ul>
 
-        <h3>4. L'Optimisation Automatique (Baguette Magique)</h3>
-        <p>Le bouton "Optimiser" remplit automatiquement vos chambres en quelques millisecondes.</p>
-        <ul>
-            <li><strong>Priorité n°1 :</strong> Ne jamais dépasser vos tolérances de sécurité.</li>
-            <li><strong>Priorité n°2 :</strong> Obtenir le CG le plus proche possible de votre cible (quitte à mettre moins de poids).</li>
-            <li><strong>Priorité n°3 :</strong> Atteindre le poids cible.</li>
-        </ul>
-        <p><strong>Astuce :</strong> Le mode manuel est toujours actif quelque soit les paramètres. Ajustez manuellement les plombs en cliquant sur les noms des chambres pour les dérouler.</p>
+<h3>4. L'Optimisation Automatique (Baguette Magique)</h3>
+<p>Le bouton "Optimiser" remplit automatiquement vos chambres en quelques millisecondes.</p>
+<ul>
+    <li><strong>Priorité n°1 :</strong> Ne jamais dépasser vos tolérances de sécurité.</li>
+    <li><strong>Priorité n°2 :</strong> Obtenir le CG le plus proche possible de votre cible (quitte à mettre moins de poids).</li>
+    <li><strong>Priorité n°3 :</strong> Atteindre le poids cible.</li>
+</ul>
+<p><strong>Astuce :</strong> Le mode manuel est toujours actif quelque soit les paramètres. Ajustez manuellement les plombs en cliquant sur les noms des chambres pour les dérouler.</p>
 
-        <h3>5. Enregistrement des Vols</h3>
-        <p>En bas du calculateur, vous pouvez documenter votre vol.</p>
-        <ul>
-            <li><strong>Pente :</strong> Le nom du lieu.</li>
-            <li><strong>Chrono :</strong> Votre temps sur la base (ex: 35.52).</li>
-            <li><strong>Note :</strong> Appuyez sur "Enregistrer" pour ouvrir une fenêtre de commentaire (ex: Ressenti un peu arrière, Conditions stables).</li>
-        </ul>
-        <p>Le vol est alors sauvegardé avec le poids exact, le CG et le lieu de ce moment-là.</p>
+<h3>5. Enregistrement des Vols</h3>
+<p>En bas du calculateur, vous pouvez documenter votre vol.</p>
+<ul>
+    <li><strong>Pente :</strong> Le nom du lieu.</li>
+    <li><strong>Chrono :</strong> Votre temps sur la base (ex: 35.52).</li>
+    <li><strong>Note :</strong> Appuyez sur "Enregistrer" pour ouvrir une fenêtre de commentaire (ex: Ressenti un peu arrière, Conditions stables).</li>
+</ul>
+<p>Le vol est alors sauvegardé avec le poids exact, le CG et le lieu de ce moment-là.</p>
 
-        <h3>6. Paramètres Globaux (⚙️)</h3>
-        <p>Réglages pour personnaliser le comportement de l'app.</p>
-        <ul>
-            <li><strong>Tolérances Poids/CG :</strong> Définit à partir de quand les chiffres deviennent rouges. Ex : Une tolérance CG de 0.5mm est stricte, 2mm est plus souple.</li>
-            <li><strong>Coefficients A et B :</strong> Définit la "nervosité" du ballastage.</li>
-            <ul>
-                <li><strong>Valeurs par défaut :</strong> Ballastage lourd (typé compétition F3F bord de mer).</li>
-                <li><strong>Valeurs Aeromod (A=0.1 / B=2.0) :</strong> Plus adapté au vol de pente loisir/montagne.</li>
-            </ul>
-            <li><strong>Surface de Référence :</strong> La surface sur laquelle est basée la formule (généralement 62 dm² pour un planeur de 2300gr et 2m90 d’envergure). Ne la changez que si vous voulez redéfinir toute votre logique de calcul.</li>
-        </ul>
+<h3>6. Paramètres Globaux (⚙️)</h3>
+<p>Réglages pour personnaliser le comportement de l'app.</p>
+<ul>
+    <li><strong>Tolérances Poids/CG :</strong> Définit à partir de quand les chiffres deviennent rouges. Ex : Une tolérance CG de 0.5mm est stricte, 2mm est plus souple.</li>
+    <li><strong>Coefficients A et B :</strong> Définit la "nervosité" du ballastage.</li>
+    <ul>
+        <li><strong>Valeurs par défaut :</strong> Ballastage lourd (typé compétition F3F bord de mer).</li>
+        <li><strong>Valeurs Aeromod (A=0.1 / B=2.0) :</strong> Plus adapté au vol de pente loisir/montagne.</li>
+    </ul>
+    <li><strong>Surface de Référence :</strong> La surface sur laquelle est basée la formule (généralement 62 dm² pour un planeur de 2300gr et 2m90 d’envergure). Ne la changez que si vous voulez redéfinir toute votre logique de calcul.</li>
+</ul>
 
-        <h3>7. Journal et Export</h3>
-        <ul>
-            <li><strong>Filtres :</strong> Vous pouvez trier vos vols par modèle ou par pente.</li>
-            <li><strong>Bouton CSV :</strong> Exporte tout votre historique. Vous pouvez le coller dans un Excel ou l'envoyer par email pour analyser vos performances à tête reposée.</li>
-        </ul>
+<h3>7. Journal et Export</h3>
+<ul>
+    <li><strong>Filtres :</strong> Vous pouvez trier vos vols par modèle ou par pente.</li>
+    <li><strong>Bouton CSV :</strong> Exporte tout votre historique. Vous pouvez le coller dans un Excel ou l'envoyer par email pour analyser vos performances à tête reposée.</li>
+</ul>
 
-        <h3>8. Mode Hors-Ligne (Zone Blanche)</h3>
-        <p>L'application est conçue pour fonctionner sans internet une fois la première visite effectuée.</p>
-        <ul>
-            <li><strong>Installation :</strong> Sur iPhone, utilisez Safari > Partager > "Sur l'écran d'accueil".</li>
-            <li><strong>Utilisation :</strong> L'icône apparaît sur votre téléphone. Même en mode avion au sommet d'une montagne, vos données et le calculateur restent 100% fonctionnels. Toutes les données sont stockées localement dans votre téléphone.</li>
-        </ul>
-        `
+<h3>8. Mode Hors-Ligne (Zone Blanche)</h3>
+<p>L'application est conçue pour fonctionner sans internet une fois la première visite effectuée.</p>
+<ul>
+    <li><strong>Installation :</strong> Sur iPhone, utilisez Safari > Partager > "Sur l'écran d'accueil".</li>
+    <li><strong>Utilisation :</strong> L'icône apparaît sur votre téléphone. Même en mode avion au sommet d'une montagne, vos données et le calculateur restent 100% fonctionnels. Toutes les données sont stockées localement dans votre téléphone.</li>
+</ul>
+`
     },
     en: {
         new_model: "+ NEW MODEL", logbook_btn: "Flight Logs", back: "BACK", config: "CONFIG",
@@ -134,7 +134,6 @@ const dict = {
         stat_target: "TARGET", stat_current: "CURRENT", stat_cg: "CG (mm)", wind: "Wind (m/s)", factor: "Factor %", optimize: "🪄 OPTIMIZE",
         clear_all: "Clear All", ph_slope: "Slope", ph_time: "Time", save_flight: "💾 SAVE FLIGHT",
         mass_g: "MASS (g)", adj_cg: "CG Adj.",
-        
         edit_title: "EDIT MODEL", 
         lbl_name: "Model Name", 
         lbl_empty_w: "Empty Weight (g)", 
@@ -152,7 +151,6 @@ const dict = {
         lbl_unit_mass: "Unit Mass (g)", 
         lbl_stock: "Stock Avail. (Qty)", 
         ph_stock: "Stock",
-
         save: "SAVE", cancel: "CANCEL", delete_model: "DELETE MODEL",
         duplicate_model: "DUPLICATE", copy_suffix: " (Copy)", export_model: "EXPORT MODEL",
         logbook_title: "LOGBOOK", help_title: "HELP", mat_brass: "BRASS", mat_lead: "LEAD", mat_tung: "TUNG.",
@@ -163,14 +161,7 @@ const dict = {
         export_all: "EXPORT ALL (.json)", import_btn: "IMPORT",
         msg_import_success: "Import successful!", msg_import_err: "Error importing.",
         msg_replace_all: "Replace all data?", msg_add_model: "Model detected: ", msg_add_model_q: "Add to list?",
-        help_html: `
-        <h3>1. Home</h3>
-        <ul><li>List, New Model, Logs.</li></ul>
-        <h3>2. Config</h3>
-        <ul><li>Empty Weight/CG: Without ballast.</li><li>Use 'Stock Link' ID to share ballast between chambers.</li></ul>
-        <h3>3. Calculator</h3>
-        <ul><li>Set Wind & Factor.</li><li>Press Optimize to fill ballast automatically.</li></ul>
-        `
+        help_html: `<h3>1. Home</h3><ul><li>List, New Model, Logs.</li></ul><h3>2. Config</h3><ul><li>Empty Weight/CG: Without ballast.</li><li>Use 'Stock Link' ID to share ballast between chambers.</li></ul><h3>3. Calculator</h3><ul><li>Set Wind & Factor.</li><li>Press Optimize to fill ballast automatically.</li></ul>`
     },
     es: {
         new_model: "+ NUEVO MODELO", logbook_btn: "📓 REGISTRO DE VUELOS", back: "VOLVER", config: "CONFIG",
@@ -183,7 +174,6 @@ const dict = {
         stat_target: "OBJETIVO", stat_current: "ACTUAL", stat_cg: "CDG (mm)", wind: "Viento (m/s)", factor: "Factor %", optimize: "🪄 OPTIMIZAR",
         clear_all: "Vaciar Todo", ph_slope: "Ladera", ph_time: "Crono", save_flight: "💾 GUARDAR VUELO",
         mass_g: "MASA (g)", adj_cg: "Ajuste CDG",
-        
         edit_title: "EDITAR MODELO", 
         lbl_name: "Nombre del modelo", 
         lbl_empty_w: "Peso en vacío (g)", 
@@ -201,7 +191,6 @@ const dict = {
         lbl_unit_mass: "Peso unitario (g)", 
         lbl_stock: "Stock Dispon. (Cant)", 
         ph_stock: "Stock",
-
         save: "GUARDAR", cancel: "CANCELAR", delete_model: "ELIMINAR",
         duplicate_model: "DUPLICAR", copy_suffix: " (Copia)", export_model: "EXPORTAR MODELO",
         logbook_title: "REGISTRO", help_title: "AYUDA", mat_brass: "LATÓN", mat_lead: "PLOMO", mat_tung: "TUNGST.",
@@ -212,32 +201,7 @@ const dict = {
         export_all: "EXPORTAR TODO (.json)", import_btn: "IMPORTAR",
         msg_import_success: "¡Importación exitosa!", msg_import_err: "Error al importar.",
         msg_replace_all: "¿Reemplazar todos los datos?", msg_add_model: "Modelo detectado: ", msg_add_model_q: "¿Añadir a la lista?",
-        help_html: `
-        <h3>1. Inicio (Flota)</h3>
-        <ul>
-            <li><strong>Lista:</strong> Modelos guardados. Toque para abrir el calculador.</li>
-            <li><strong>"+":</strong> Crear nuevo modelo.</li>
-            <li><strong>Registro:</strong> Historial de vuelos.</li>
-        </ul>
-        <h3>2. Configuración</h3>
-        <ul>
-            <li><strong>Peso/CDG Vacío:</strong> Medidos sin lastre.</li>
-            <li><strong>CDG Objetivo:</strong> El CDG ideal de vuelo.</li>
-        </ul>
-        <p><strong>Cámaras de Lastre:</strong></p>
-        <ul>
-            <li><strong>Dist:</strong> Distancia (mm) al Borde de Ataque.</li>
-            <li><strong>Stock:</strong> "0" para ocultar. "999" para ilimitado.</li>
-            <li><strong>Vincular (ID):</strong> Use el mismo ID para compartir el stock físico.</li>
-        </ul>
-        <h3>3. Calculador</h3>
-        <ul>
-            <li><strong>Viento:</strong> Velocidad medida.</li>
-            <li><strong>Objetivo:</strong> Peso ideal calculado.</li>
-            <li><strong>Actual:</strong> Peso real con lastre.</li>
-            <li><strong>Optimizar 🪄:</strong> Calcula la mejor carga automáticamente.</li>
-        </ul>
-        `
+        help_html: `<h3>1. Inicio (Flota)</h3><ul><li>Lista: Modelos guardados. Toque para abrir el calculador.</li><li>"+": Crear nuevo modelo.</li><li>Registro: Historial de vuelos.</li></ul><h3>2. Configuración</h3><ul><li>Peso/CDG Vacío: Medidos sin lastre.</li><li>CDG Objetivo: El CDG ideal de vuelo.</li></ul><p><strong>Cámaras de Lastre:</strong></p><ul><li>Dist: Distancia (mm) al Borde de Ataque.</li><li>Stock: "0" para ocultar. "999" para ilimitado.</li><li>Vincular (ID): Use el mismo ID para compartir el stock físico.</li></ul><h3>3. Calculador</h3><ul><li>Viento: Velocidad medida.</li><li>Objetivo: Peso ideal calculado.</li><li>Actual: Peso real con lastre.</li><li>Optimizar 🪄: Calcula la mejor carga automáticamente.</li></ul>`
     }
 };
 
@@ -269,6 +233,11 @@ function calculateAB() {
     if (x2 === x1) x2 += 0.1; 
     globalCoefs.a = (y2 - y1) / (x2 - x1);
     globalCoefs.b = y1 - (globalCoefs.a * x1);
+
+    const elA = document.getElementById('disp-coef-a');
+    const elB = document.getElementById('disp-coef-b');
+    if(elA) elA.innerText = globalCoefs.a.toFixed(3);
+    if(elB) elB.innerText = globalCoefs.b.toFixed(3);
 }
 
 function getCalculatedTargetWeight(w, f, gliderArea) {
@@ -357,8 +326,21 @@ function renderCalc() {
     const noseContainer = document.getElementById('nose-ballast-container');
     const noseColor = g.noseColor || '#d63384';
     const noseMass = g.noseMass || 0;
+
+    // --- CORRECTION : MÉMOIRE D'ÉTAT ---
+    // On regarde si l'élément existe DÉJÀ dans la page
+    const existingNose = document.getElementById('nose-ballast-ui');
+    let isCollapsed = (noseMass <= 0); // Par défaut (premier chargement) c'est fermé si 0
+
+    // Mais si l'élément existait déjà, on respecte le choix de l'utilisateur (ouvert ou fermé)
+    // peu importe la valeur du poids.
+    if (existingNose) {
+        isCollapsed = existingNose.classList.contains('collapsed');
+    }
+    // -----------------------------------
+
     noseContainer.innerHTML = `
-        <div class="ballast-line ${noseMass<=0 ? 'collapsed' : ''} nose-card" id="nose-ballast-ui" onclick="if(event.target.tagName!=='BUTTON' && event.target.tagName!=='INPUT') this.classList.toggle('collapsed')">
+        <div class="ballast-line ${isCollapsed ? 'collapsed' : ''} nose-card" id="nose-ballast-ui" onclick="if(event.target.tagName!=='BUTTON' && event.target.tagName!=='INPUT') this.classList.toggle('collapsed')">
             <div class="ballast-title-row">
                 <div style="display:flex; align-items:center;"><span style="font-weight:bold; font-family:var(--font-head); color:${noseColor};">${t('nose_title')}</span></div>
                 <div style="display:flex; align-items:center;"><span style="font-family:var(--font-num); font-size:0.9rem;">${noseMass}g</span><span class="toggle-icon">▶</span></div>
@@ -379,8 +361,6 @@ function renderCalc() {
 
     const l = document.getElementById('calc-list'); l.innerHTML = '';
     if(!g.loadout) g.loadout = new Array(g.chambers.length).fill({b:0, l:0, t:0});
-
-    const getGroupUsage = (grpId, type) => { let u = 0; g.chambers.forEach((ch, idx) => { if(ch.group == grpId) u += g.loadout[idx][type]; }); return u; };
 
     g.chambers.forEach((c,i) => {
         const L = g.loadout[i];
@@ -583,11 +563,11 @@ window.autoFillBallast = function() {
 window.exportData = function(type) {
     let exportObj = {}, fileName = "f3f_backup.json";
     if(type === 'all') {
-        exportObj = { type: 'backup_full', version: '5.24', date: new Date().toISOString(), gliders: gliders, logs: flightLogs, coefs: globalCoefs, opts: optParams };
+        exportObj = { type: 'backup_full', version: '5.25', date: new Date().toISOString(), gliders: gliders, logs: flightLogs, coefs: globalCoefs, opts: optParams };
         fileName = `f3f_full_backup_${new Date().toISOString().slice(0,10)}.json`;
     } else if (type === 'model') {
         if(!tempGlider) return;
-        exportObj = { type: 'backup_model', version: '5.24', data: tempGlider };
+        exportObj = { type: 'backup_model', version: '5.25', data: tempGlider };
         fileName = `${tempGlider.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`;
     }
     const blob = new Blob([JSON.stringify(exportObj, null, 2)], {type: 'application/json'});
@@ -597,18 +577,18 @@ window.exportData = function(type) {
 };
 
 window.triggerImport = function() { document.getElementById('import-file').click(); };
-document.getElementById('import-file').addEventListener('change', function() {
-    const file = this.files[0]; if(!file) return;
+window.handleFile = function(input) {
+    const file = input.files[0]; if(!file) return;
     const reader = new FileReader();
     reader.onload = (e) => {
         try {
             const json = JSON.parse(e.target.result);
             processImport(json);
         } catch(err) { window.customAlert(t('msg_import_err')); console.error(err); }
-        this.value = '';
+        input.value = '';
     };
     reader.readAsText(file);
-});
+};
 
 function processImport(data) {
     if(!data.type) { window.customAlert(t('msg_import_err')); return; }
@@ -652,46 +632,166 @@ window.createNewGlider = function() { tempGlider = { id: Date.now(), name: "MOD�
 window.editCurrentGlider = function() { const g = gliders.find(x => x.id == currentGliderId); if(!g) return; tempGlider = JSON.parse(JSON.stringify(g)); renderEdit(); window.navigateTo('edit'); };
 function renderEdit() { 
     document.getElementById('edit-name').value = tempGlider.name; 
-    document.getElementById('edit-empty-w').value = tempGlider.emptyW; document.getElementById('edit-empty-cg').value = tempGlider.emptyCG; 
-    document.getElementById('edit-area').value = tempGlider.area; document.getElementById('edit-target').value = tempGlider.target; 
-    document.getElementById('edit-nose-dist').value = tempGlider.noseDist || 0; document.getElementById('edit-nose-color').value = tempGlider.noseColor || "#d63384";
-    const l = document.getElementById('edit-chambers-list'); l.innerHTML = ''; 
-    tempGlider.chambers.forEach((c,i) => { const d = document.createElement('div'); d.className = 'card'; d.style.position = 'relative'; const mb = c.mass_brass || '', ml = c.mass_lead || '', mt = c.mass_tungsten || '', sb = c.stock_brass || '', sl = c.stock_lead || '', st = c.stock_tungsten || '', gr = c.group || '', clr = c.color || '#888888'; d.innerHTML = `<button style="position:absolute; top:10px; right:10px; color:var(--danger); border:none; background:none; font-size:1.5rem;" onclick="window.rmCh(${i})">×</button><div class="row"><div style="flex:0 0 50px; display:flex; flex-direction:column; align-items:center;"><label class="lbl-small">${t('lbl_color')}</label><input type="color" value="${clr}" onchange="window.upc(${i},'color',this.value)" style="width:100%; height:35px; border:none; padding:0; background:none; cursor:pointer; margin-top:2px;"><div onclick="window.resetColor(${i})" style="font-size:0.8rem; cursor:pointer; color:var(--text-muted); margin-top:4px;">↺</div></div><div style="flex:3"><label class="lbl-small">${t('lbl_name')}</label><input value="${c.name}" onchange="window.upc(${i},'name',this.value)"></div><div style="flex:1"><label class="lbl-small">${t('lbl_grp')}</label><input type="number" value="${gr}" onchange="window.upc(${i},'group',this.value)" style="border-color:var(--primary)"></div></div><div class="row" style="margin-top:10px;"><div style="flex:1"><label class="lbl-small">${t('lbl_dist')}</label><input type="number" value="${c.dist}" onchange="window.upc(${i},'dist',this.value)"></div><div style="flex:1"><label class="lbl-small">${t('lbl_max')}</label><input type="number" value="${c.max}" onchange="window.upc(${i},'max',this.value)"></div></div><div style="margin-top:10px;"><label class="lbl-small">${t('lbl_unit_mass')}</label><div class="row"><input type="number" placeholder="${t('mat_brass')}" value="${mb}" onchange="window.upc(${i},'mass_brass',this.value)" style="border-bottom:2px solid var(--c-brass)"><input type="number" placeholder="${t('mat_lead')}" value="${ml}" onchange="window.upc(${i},'mass_lead',this.value)" style="border-bottom:2px solid var(--c-lead)"><input type="number" placeholder="${t('mat_tung')}" value="${mt}" onchange="window.upc(${i},'mass_tungsten',this.value)" style="border-bottom:2px solid var(--c-tung)"></div></div><div style="margin-top:5px;"><label class="lbl-small">${t('lbl_stock')}</label><div class="row"><input type="number" placeholder="${t('ph_stock')}" value="${sb}" onchange="window.upc(${i},'stock_brass',this.value)"><input type="number" placeholder="${t('ph_stock')}" value="${sl}" onchange="window.upc(${i},'stock_lead',this.value)"><input type="number" placeholder="${t('ph_stock')}" value="${st}" onchange="window.upc(${i},'stock_tungsten',this.value)"></div></div>`; l.appendChild(d); }); updateUITexts(); }
+    document.getElementById('edit-empty-w').value = tempGlider.emptyW; 
+    document.getElementById('edit-empty-cg').value = tempGlider.emptyCG; 
+    document.getElementById('edit-area').value = tempGlider.area; 
+    document.getElementById('edit-target').value = tempGlider.target; 
+    document.getElementById('edit-nose-dist').value = tempGlider.noseDist || 0; 
+    document.getElementById('edit-nose-color').value = tempGlider.noseColor || "#d63384";
+    
+    const l = document.getElementById('edit-chambers-list'); 
+    l.innerHTML = ''; 
+    
+    tempGlider.chambers.forEach((c,i) => { 
+        const d = document.createElement('div'); 
+        d.className = 'card'; 
+        d.style.position = 'relative'; 
+        const mb = c.mass_brass || '', ml = c.mass_lead || '', mt = c.mass_tungsten || '';
+        const sb = c.stock_brass || '', sl = c.stock_lead || '', st = c.stock_tungsten || '';
+        const gr = c.group || ''; 
+        const clr = c.color || '#888888'; 
+
+        d.innerHTML = `
+        <button style="position:absolute; top:10px; right:10px; color:var(--danger); border:none; background:none; font-size:1.5rem;" onclick="window.rmCh(${i})">×</button>
+        <div class="row">
+            <div style="flex:0 0 50px; display:flex; flex-direction:column; align-items:center;">
+                <label class="lbl-small">${t('lbl_color')}</label>
+                <input type="color" value="${clr}" onchange="window.upc(${i},'color',this.value)" style="width:100%; height:35px; border:none; padding:0; background:none; cursor:pointer; margin-top:2px;">
+                <div onclick="window.resetColor(${i})" style="font-size:0.8rem; cursor:pointer; color:var(--text-muted); margin-top:4px;">↺</div>
+            </div>
+            <div style="flex:3">
+                <label class="lbl-small">${t('lbl_ch_name')}</label>
+                <input value="${c.name}" onchange="window.upc(${i},'name',this.value)">
+            </div>
+            <div style="flex:1">
+                <label class="lbl-small">${t('lbl_grp')}</label>
+                <input type="number" placeholder="ID" value="${gr}" onchange="window.upc(${i},'group',this.value)" style="border-color:var(--primary)">
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div style="flex:1"><label class="lbl-small">${t('lbl_dist')}</label><input type="number" value="${c.dist}" onchange="window.upc(${i},'dist',this.value)"></div>
+            <div style="flex:1"><label class="lbl-small">${t('lbl_max')}</label><input type="number" value="${c.max}" onchange="window.upc(${i},'max',this.value)"></div>
+        </div>
+        <div style="margin-top:10px;">
+            <label class="lbl-small">${t('lbl_unit_mass')}</label>
+            <div class="row">
+                <input type="number" placeholder="${t('mat_brass')}" value="${mb}" onchange="window.upc(${i},'mass_brass',this.value)" style="border-bottom:2px solid var(--c-brass)">
+                <input type="number" placeholder="${t('mat_lead')}" value="${ml}" onchange="window.upc(${i},'mass_lead',this.value)" style="border-bottom:2px solid var(--c-lead)">
+                <input type="number" placeholder="${t('mat_tung')}" value="${mt}" onchange="window.upc(${i},'mass_tungsten',this.value)" style="border-bottom:2px solid var(--c-tung)">
+            </div>
+        </div>
+        <div style="margin-top:5px;">
+            <label class="lbl-small">${t('lbl_stock')}</label>
+            <div class="row">
+                <input type="number" placeholder="${t('ph_stock')}" value="${sb}" onchange="window.upc(${i},'stock_brass',this.value)">
+                <input type="number" placeholder="${t('ph_stock')}" value="${sl}" onchange="window.upc(${i},'stock_lead',this.value)">
+                <input type="number" placeholder="${t('ph_stock')}" value="${st}" onchange="window.upc(${i},'stock_tungsten',this.value)">
+            </div>
+        </div>`; 
+        l.appendChild(d); 
+    }); 
+    updateUITexts(); 
+}
 window.upc = function(i,k,v) { if(k==='name'||k==='color') tempGlider.chambers[i][k]=v; else { let val = parseFloat(v); if(isNaN(val)) val = null; tempGlider.chambers[i][k]=val; } };
-window.rmCh = function(i) { tempGlider.chambers.splice(i,1); renderEdit(); };
+window.rmCh = function(i) {
+    saveEditState(); // <--- ON SAUVEGARDE D'ABORD
+    tempGlider.chambers.splice(i,1);
+    renderEdit();
+};
 window.resetColor = function(t) { if(t==='nose') { document.getElementById('edit-nose-color').value = '#d63384'; tempGlider.noseColor = '#d63384'; } else { tempGlider.chambers[t].color = '#888888'; renderEdit(); } };
-window.addChamberLine = function() { tempGlider.chambers.push({name:"BALLAST", dist:0, max:5, mass_brass:0, mass_lead:0, mass_tungsten:0, color:"#888888"}); renderEdit(); };
-window.duplicateGlider = function() { tempGlider.name = document.getElementById('edit-name').value; tempGlider.emptyW = parseFloat(document.getElementById('edit-empty-w').value); tempGlider.emptyCG = parseFloat(document.getElementById('edit-empty-cg').value); tempGlider.area = parseFloat(document.getElementById('edit-area').value); tempGlider.target = parseFloat(document.getElementById('edit-target').value); tempGlider.noseDist = parseFloat(document.getElementById('edit-nose-dist').value) || 0; tempGlider.noseColor = document.getElementById('edit-nose-color').value; let newG = JSON.parse(JSON.stringify(tempGlider)); newG.id = Date.now(); newG.name += t('copy_suffix'); newG.loadout = newG.chambers.map(() => ({b:0, l:0, t:0})); newG.noseMass = 0; gliders.push(newG); save(); window.navigateTo('home'); window.customAlert(t('alert_copied')); };
+// --- NOUVELLE FONCTION POUR SAUVEGARDER L'ÉTAT AVANT RE-RENDER ---
+function saveEditState() {
+    tempGlider.name = document.getElementById('edit-name').value;
+    tempGlider.emptyW = parseFloat(document.getElementById('edit-empty-w').value);
+    tempGlider.emptyCG = parseFloat(document.getElementById('edit-empty-cg').value);
+    tempGlider.area = parseFloat(document.getElementById('edit-area').value);
+    tempGlider.target = parseFloat(document.getElementById('edit-target').value);
+    tempGlider.noseDist = parseFloat(document.getElementById('edit-nose-dist').value) || 0;
+    tempGlider.noseColor = document.getElementById('edit-nose-color').value;
+}
+window.addChamberLine = function() {
+    saveEditState(); // <--- ON SAUVEGARDE D'ABORD
+    tempGlider.chambers.push({name:"BALLAST", dist:0, max:5, mass_brass:0, mass_lead:0, mass_tungsten:0, color:"#888888"});
+    renderEdit();
+};
+window.duplicateGlider = function() {
+    saveEditState(); // On récupère tout
+    let newG = JSON.parse(JSON.stringify(tempGlider));
+    newG.id = Date.now();
+    newG.name += t('copy_suffix');
+    newG.loadout = newG.chambers.map(() => ({b:0, l:0, t:0}));
+    newG.noseMass = 0;
+    gliders.push(newG);
+    save();
+    window.navigateTo('home');
+    window.customAlert(t('alert_copied'));
+};
 window.saveGlider = function() { tempGlider.name = document.getElementById('edit-name').value; tempGlider.emptyW = parseFloat(document.getElementById('edit-empty-w').value); tempGlider.emptyCG = parseFloat(document.getElementById('edit-empty-cg').value); tempGlider.area = parseFloat(document.getElementById('edit-area').value); tempGlider.target = parseFloat(document.getElementById('edit-target').value); tempGlider.noseDist = parseFloat(document.getElementById('edit-nose-dist').value) || 0; tempGlider.noseColor = document.getElementById('edit-nose-color').value; const idx = gliders.findIndex(x=>x.id==tempGlider.id); if(idx===-1) { tempGlider.loadout = new Array(tempGlider.chambers.length).fill({b:0,l:0,t:0}); gliders.push(tempGlider); } else { if(gliders[idx].chambers.length !== tempGlider.chambers.length) { tempGlider.loadout = new Array(tempGlider.chambers.length).fill({b:0,l:0,t:0}); } else { tempGlider.loadout = gliders[idx].loadout; } gliders[idx]=tempGlider; } save(); window.navigateTo('home'); };
 window.confirmDeleteGlider = function() { window.showModal(t('msg_del_mod'), false, [{tx:t('cancel'), cl:"btn-outline", val:0}, {tx:t('delete_model'), cl:"btn-danger", val:1}], (r) => { if(r) { gliders = gliders.filter(x=>x.id!==tempGlider.id); save(); window.navigateTo('home'); } }); };
 window.confirmResetLoadout = function() { window.showModal(t('msg_reset'), false, [{tx:t('no'), cl:"btn-outline", val:0}, {tx:t('yes'), cl:"btn-danger", val:1}], (r) => { if(r) { const g = gliders.find(x=>x.id==currentGliderId); g.loadout = g.loadout.map(() => ({b:0, l:0, t:0})); save(); renderCalc(); } }); };
 
 /* --- SAVE & INIT --- */
-function save() { localStorage.setItem('f3f_gliders', JSON.stringify(gliders)); localStorage.setItem('f3f_logs', JSON.stringify(flightLogs)); localStorage.setItem('f3f_global_coefs', JSON.stringify(globalCoefs)); localStorage.setItem('f3f_opt_params', JSON.stringify(optParams)); }
-window.saveGlobalCoefs = function() { globalCoefs.v1 = parseFloat(document.getElementById('set-v1').value) || 0; globalCoefs.m1 = parseFloat(document.getElementById('set-m1').value) || 0; globalCoefs.v2 = parseFloat(document.getElementById('set-v2').value) || 20; globalCoefs.m2 = parseFloat(document.getElementById('set-m2').value) || 5; globalCoefs.refArea = parseFloat(document.getElementById('set-ref-area').value); calculateAB(); save(); };
-window.saveOptParams = function() { optParams.wMin = parseFloat(document.getElementById('set-tol-w-min').value) || 0; optParams.wMax = parseFloat(document.getElementById('set-tol-w-max').value) || 0; optParams.cgTolPlus = parseFloat(document.getElementById('set-tol-cg-plus').value) || 0.1; optParams.cgTolMinus = parseFloat(document.getElementById('set-tol-cg-minus').value) || 0.1; save(); };
+function save() { 
+    localStorage.setItem('f3f_gliders', JSON.stringify(gliders)); 
+    localStorage.setItem('f3f_logs', JSON.stringify(flightLogs)); 
+    localStorage.setItem('f3f_global_coefs', JSON.stringify(globalCoefs)); 
+    localStorage.setItem('f3f_opt_params', JSON.stringify(optParams)); 
+}
+
+window.saveGlobalCoefs = function() { 
+    globalCoefs.v1 = parseFloat(document.getElementById('set-v1').value) || 0; 
+    globalCoefs.m1 = parseFloat(document.getElementById('set-m1').value) || 0; 
+    globalCoefs.v2 = parseFloat(document.getElementById('set-v2').value) || 20; 
+    globalCoefs.m2 = parseFloat(document.getElementById('set-m2').value) || 5; 
+    globalCoefs.refArea = parseFloat(document.getElementById('set-ref-area').value); 
+    calculateAB(); 
+    save(); 
+};
+
+window.saveOptParams = function() { 
+    optParams.wMin = parseFloat(document.getElementById('set-tol-w-min').value) || 0; 
+    optParams.wMax = parseFloat(document.getElementById('set-tol-w-max').value) || 0; 
+    optParams.cgTolPlus = parseFloat(document.getElementById('set-tol-cg-plus').value) || 0.1; 
+    optParams.cgTolMinus = parseFloat(document.getElementById('set-tol-cg-minus').value) || 0.1; 
+    save(); 
+};
 
 function initApp() {
     gliders = JSON.parse(localStorage.getItem('f3f_gliders')) || [];
     flightLogs = JSON.parse(localStorage.getItem('f3f_logs')) || [];
     let savedCoefs = JSON.parse(localStorage.getItem('f3f_global_coefs'));
-    if (!savedCoefs) { globalCoefs = { a: 0.16, b: 1.82, refArea: 62, v1:3, m1:2.3, v2:20, m2:5.0 }; save(); } else { globalCoefs = savedCoefs; if(!globalCoefs.refArea) { globalCoefs.refArea = 62; save(); } }
+    
+    if (!savedCoefs) { 
+        globalCoefs = { a: 0.16, b: 1.82, refArea: 62, v1:3, m1:2.3, v2:20, m2:5.0 }; 
+        save(); 
+    } else { 
+        globalCoefs = savedCoefs; 
+        if(!globalCoefs.refArea) { globalCoefs.refArea = 62; save(); } 
+    }
+    
     let savedOpt = JSON.parse(localStorage.getItem('f3f_opt_params'));
     if(savedOpt) optParams = savedOpt;
     
-    document.getElementById('set-v1').value = globalCoefs.v1; document.getElementById('set-m1').value = globalCoefs.m1;
-    document.getElementById('set-v2').value = globalCoefs.v2; document.getElementById('set-m2').value = globalCoefs.m2;
-    calculateAB();
+    document.getElementById('set-v1').value = globalCoefs.v1; 
+    document.getElementById('set-m1').value = globalCoefs.m1;
+    document.getElementById('set-v2').value = globalCoefs.v2; 
+    document.getElementById('set-m2').value = globalCoefs.m2;
     document.getElementById('set-ref-area').value = globalCoefs.refArea || 62;
-    document.getElementById('set-tol-w-min').value = optParams.wMin; document.getElementById('set-tol-w-max').value = optParams.wMax;
-    document.getElementById('set-tol-cg-plus').value = optParams.cgTolPlus; document.getElementById('set-tol-cg-minus').value = optParams.cgTolMinus;
+    document.getElementById('set-tol-w-min').value = optParams.wMin; 
+    document.getElementById('set-tol-w-max').value = optParams.wMax;
+    document.getElementById('set-tol-cg-plus').value = optParams.cgTolPlus; 
+    document.getElementById('set-tol-cg-minus').value = optParams.cgTolMinus;
     
+    calculateAB(); 
     window.setTheme(currentTheme);
     gliders.forEach(g => { if(Array.isArray(g.loadout) && typeof g.loadout[0] === 'number') g.loadout = g.loadout.map(v => ({ b: v, l: 0, t: 0 })); });
     save();
-    document.getElementById('lang-select').value = currentLang; document.getElementById('theme-select').value = currentTheme; 
-    updateUITexts(); showView('home');
+    
+    document.getElementById('lang-select').value = currentLang; 
+    document.getElementById('theme-select').value = currentTheme; 
+    updateUITexts(); 
+    showView('home');
 }
 
-// LANCEMENT
 window.addEventListener('load', initApp);
+// FIN DU FICHIER

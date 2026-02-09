@@ -1,40 +1,34 @@
-const CACHE_NAME = 'f3f-manager-v5.2.1';
+const CACHE_NAME = 'f3f-manager-v5.999'; // J'ai changé le numéro pour forcer la mise à jour
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './css/style.css',
     './js/app.js',
-    './manifest.json'
-    // './icon.png'  <-- Décommente cette ligne quand tu auras mis ton image !
+    './manifest.json',
+    './icon.png'
 ];
 
-// INSTALLATION : On met en cache
 self.addEventListener('install', (evt) => {
+    self.skipWaiting();
     evt.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            console.log('[ServiceWorker] Mise en cache des fichiers');
+            console.log('[SW] Mise en cache');
             return cache.addAll(ASSETS_TO_CACHE);
         })
     );
-    self.skipWaiting();
 });
 
-// ACTIVATION : On nettoie les vieux caches
 self.addEventListener('activate', (evt) => {
     evt.waitUntil(
         caches.keys().then((keys) => {
             return Promise.all(keys.map((key) => {
-                if (key !== CACHE_NAME) {
-                    console.log('[ServiceWorker] Suppression vieux cache', key);
-                    return caches.delete(key);
-                }
+                if (key !== CACHE_NAME) return caches.delete(key);
             }));
         })
     );
     self.clients.claim();
 });
 
-// INTERCEPTION : On sert le cache si hors-ligne
 self.addEventListener('fetch', (evt) => {
     evt.respondWith(
         caches.match(evt.request).then((cacheRes) => {
