@@ -246,19 +246,53 @@ window.calculateCurve = function() {
     globalCurve.m2 = parseFloat(document.getElementById('set-m2').value) || 0;
     globalCurve.refArea = parseFloat(document.getElementById('set-ref-area').value) || 62;
     
-    globalCurve.activeBilinear = document.getElementById('check-bilinear').checked;
+    // Checkbox Mobile Friendly (utilisation de onclick dans le HTML, mais vérification ici)
+    const check = document.getElementById('check-bilinear');
+    globalCurve.activeBilinear = check ? check.checked : false;
+    
     globalCurve.vP = parseFloat(document.getElementById('set-v-pivot').value) || 10;
     globalCurve.mP = parseFloat(document.getElementById('set-m-pivot').value) || 0;
 
-    // 2. Sauvegarde
-    localStorage.setItem('f3f_curve_params', JSON.stringify(globalCurve));
-    // (Legacy backup pour compatibilité)
-    localStorage.setItem('f3f_global_coefs', JSON.stringify({
-        v1: globalCurve.v1, m1: globalCurve.m1, v2: globalCurve.v2, m2: globalCurve.m2, refArea: globalCurve.refArea
-    }));
+    // 2. CALCUL ET AFFICHAGE DES TEXTES (COEF A / B)
+    const elA = document.getElementById('disp-coef-a');
+    const elB = document.getElementById('disp-coef-b');
 
-    // 3. Mise à jour graphique
+    if (elA && elB) {
+        if (!globalCurve.activeBilinear) {
+            // MODE LINÉAIRE : On calcule A et B comme avant
+            let denominator = (globalCurve.v2 - globalCurve.v1);
+            if (denominator === 0) denominator = 0.1; // Évite division par zéro
+            
+            let a = (globalCurve.m2 - globalCurve.m1) / denominator;
+            let b = globalCurve.m1 - (a * globalCurve.v1);
+
+            // Mise à jour de l'affichage
+            elA.innerText = a.toFixed(3);
+            elB.innerText = b.toFixed(3);
+            
+            // On met aussi à jour l'objet globalCoefs pour compatibilité
+            globalCurve.a = a;
+            globalCurve.b = b;
+        } else {
+            // MODE DOUBLE PENTE : Pas de coef unique
+            elA.innerText = "DOUBLE";
+            elB.innerText = "PENTE";
+            elA.style.fontSize = "0.8rem"; // Pour que ça tienne
+            elB.style.fontSize = "0.8rem";
+        }
+    }
+
+    // 3. Sauvegarde
+    localStorage.setItem('f3f_curve_params', JSON.stringify(globalCurve));
+    
+    // 4. Mise à jour graphique
     updateSettingsChart();
+
+    // 5. Mise à jour Calculateur (si ouvert)
+    if (!document.getElementById('view-calc').classList.contains('hidden')) {
+        const wind = parseFloat(document.getElementById('inp-wind').value) || 0;
+        syncInputs('wind', wind); 
+    }
 };
 
 // FONCTION MATHÉMATIQUE MAÎTRESSE
