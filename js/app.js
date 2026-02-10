@@ -207,7 +207,7 @@ function safeSetValue(id, val) {
     if(el) el.value = val;
 }
 
-// Active/Désactive l'affichage du bloc pivot
+// Active/Désactive l'affichage du bloc pivot (Version Mobile Friendly)
 window.toggleBilinearMode = function(recalc = true) {
     const check = document.getElementById('check-bilinear');
     const block = document.getElementById('block-pivot');
@@ -215,10 +215,16 @@ window.toggleBilinearMode = function(recalc = true) {
     
     if (check.checked) {
         block.classList.remove('hidden');
+        block.style.display = 'block'; // <--- FORCE L'AFFICHAGE DIRECTEMENT
     } else {
         block.classList.add('hidden');
+        block.style.display = 'none';  // <--- FORCE LE MASQUAGE
     }
-    if (recalc) calculateCurve();
+    
+    // On force le recalcul immédiat pour mettre à jour le graphique
+    if (recalc) {
+        setTimeout(calculateCurve, 10); 
+    }
 };
 
 // Sauvegarde et Recalcul global
