@@ -1,4 +1,4 @@
-const CACHE_NAME = 'f3f-manager-v5.993'; // J'ai changé le numéro pour forcer la mise à jour
+const CACHE_NAME = 'f3f-manager-v5.991'; // J'ai changé le numéro pour forcer la mise à jour
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

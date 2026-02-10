@@ -1,5 +1,8 @@
+/* =========================================
+   F3F MANAGER v5.35 - APP.JS (VERSION FUSIONNÉE)
+   ========================================= */
+
 /* --- DICTIONNAIRE DE TRADUCTION --- */
-/*alert("LE FICHIER JS EST CHARGÉ !");*/
 const dict = {
     fr: {
         new_model: "+ NOUVEAU MODÈLE", logbook_btn: "📓 JOURNAL DES VOLS", back: "RETOUR", config: "CONFIG",
@@ -7,7 +10,7 @@ const dict = {
         opt_title: "OPTIMISATION", opt_desc: "Réglages des limites acceptables pour l'algorithme.",
         lbl_tol_w_min: "Tol. Poids Moins (-g)", lbl_tol_w_max: "Tol. Poids Plus (+g)",
         lbl_tol_cg_plus: "Tol. CG + (mm)", lbl_tol_cg_min: "Tol. CG - (mm)",
-        gl_desc: "Définissez la courbe de ballastage pour un planeur standard.",
+        gl_desc: "Définissez la courbe de ballastage.",
         pt1: "POINT 1 (Léger/Vide)", pt2: "POINT 2 (Lourd/Max)", lbl_weight_kg: "Poids (kg)",
         ref_surf: "Surface Référence (dm²) FAI", res_int: "Résultat interne:",
         stat_target: "CIBLE", stat_current: "ACTUEL", stat_cg: "CG (mm)", wind: "Vent (m/s)", factor: "Facteur %", optimize: "🪄 OPTIMISER",
@@ -30,56 +33,7 @@ const dict = {
         msg_import_success: "Importation réussie !", msg_import_err: "Erreur lors de l'import.",
         msg_replace_all: "Attention : Ceci va REMPLACER tous vos modèles et logs actuels. Continuer ?",
         msg_add_model: "Modèle détecté : ", msg_add_model_q: "Voulez-vous l'ajouter à votre liste ?",
-        help_html: `
-<h3>1. Accueil (Gestion de la flotte planeur)</h3>
-<ul>
-    <li><strong>Liste des planeurs :</strong> Affiche vos modèles enregistrés avec leur poids à vide. Appuyez sur un nom pour ouvrir le calculateur.</li>
-    <li><strong>Bouton "+" (Nouveau Modèle) :</strong> Pour créer une nouvelle fiche technique.</li>
-    <li><strong>Journal des Vols :</strong> Accès à l'historique de vos sessions passées.</li>
-    <li><strong>Icônes du haut :</strong> Le "?" ouvre l'aide rapide et l'icône "Engrenage" ouvre les réglages globaux.</li>
-</ul>
-<h3>2. Création et Édition d'un Modèle (Vue "CONFIG")</h3>
-<p>C’est l'étape la plus importante pour la précision des calculs.</p>
-<ul>
-    <li><strong>Nom :</strong> Le nom de votre planeur (ex: Pitbull 2, Freestyler 6).</li>
-    <li><strong>Poids Vide & CG Vide :</strong> Le poids et le centre de gravité mesurés sans aucun lest.</li>
-    <li><strong>Surf. dm² FAI :</strong> La surface totale de l'aile et du stab. Elle est utilisée pour la "Règle de 3" par rapport à la surface de référence.</li>
-    <li><strong>CG Cible :</strong> Le CG idéal auquel vous souhaitez voler (l'application cherchera à s'en rapprocher au maximum).</li>
-</ul>
-<p><strong>Gestion des Chambres :</strong></p>
-<ul>
-    <li><strong>Dist :</strong> La distance entre le centre de la chambre et le bord d’attaque. Positif pour l’arrière, négatif pour la soute de nez.</li>
-    <li><strong>Qté Max :</strong> Nombre de gueuses que la chambre peut contenir.</li>
-    <li><strong>Masses Unitaires :</strong> Le poids d'une seule gueuse pour chaque matière (Laiton, Plomb, Tungstène).</li>
-    <li><strong>Stock :</strong> Indiquez combien de gueuses vous possédez réellement pour chaque matière.</li>
-    <li><strong>Soute nez :</strong> Cette soute ne rentre pas en compte dans l’optimisation. Elle est présente à titre indicatif.</li>
-    <li><strong>Distance Soute Nez :</strong> Indiquez la distance entre la soute de nez et le Bord d'Attaque.</li>
-</ul>
-<h3>3. Le Calculateur (Vue "Optimisation")</h3>
-<ul>
-    <li><strong>Vent (m/s) :</strong> Entrez la force du vent mesurée.</li>
-    <li><strong>Facteur % :</strong> Permet d'ajuster la charge (100% standard).</li>
-    <li><strong>Cible :</strong> Le poids total idéal calculé.</li>
-    <li><strong>CG (mm) :</strong> Devient VERT s'il est dans vos tolérances, ROUGE s'il s'en éloigne trop.</li>
-</ul>
-<h3>4. L'Optimisation Automatique (Baguette Magique)</h3>
-<ul>
-    <li><strong>Priorité n°1 :</strong> Ne jamais dépasser vos tolérances de sécurité.</li>
-    <li><strong>Priorité n°2 :</strong> Obtenir le CG le plus proche possible de votre cible.</li>
-    <li><strong>Priorité n°3 :</strong> Atteindre le poids cible.</li>
-</ul>
-<h3>5. Enregistrement des Vols</h3>
-<ul>
-    <li><strong>Pente :</strong> Le nom du lieu.</li>
-    <li><strong>Chrono :</strong> Votre temps sur la base (ex: 35.52).</li>
-    <li><strong>Note :</strong> Appuyez sur "Enregistrer" pour ouvrir une fenêtre de commentaire.</li>
-</ul>
-<h3>6. Paramètres Globaux (⚙️)</h3>
-<ul>
-    <li><strong>Tolérances Poids/CG :</strong> Définit à partir de quand les chiffres deviennent rouges.</li>
-    <li><strong>Coefficients A et B :</strong> Valeurs par défaut (F3F compétition) ou Aeromod (A=0.1 / B=2.0).</li>
-</ul>
-`
+        help_html: `<h3>Aide F3F Manager</h3><p>Utilisez le bouton Configuration pour régler vos modèles.</p>`
     },
     en: {
         new_model: "+ NEW MODEL", logbook_btn: "Flight Logs", back: "BACK", config: "CONFIG",
@@ -108,38 +62,7 @@ const dict = {
         export_all: "EXPORT ALL (.json)", import_btn: "IMPORT",
         msg_import_success: "Import successful!", msg_import_err: "Error importing.",
         msg_replace_all: "Replace all data?", msg_add_model: "Model detected: ", msg_add_model_q: "Add to list?",
-        help_html: `
-<h3>1. Home (Fleet Management)</h3>
-<ul>
-    <li><strong>Glider List:</strong> Registered models. Tap to open calculator.</li>
-    <li><strong>"+" Button:</strong> Create new model sheet.</li>
-    <li><strong>Logs:</strong> Your session history.</li>
-</ul>
-<h3>2. Configuration ("CONFIG" View)</h3>
-<ul>
-    <li><strong>Empty Weight/CG:</strong> Measured without ballast.</li>
-    <li><strong>FAI Area:</strong> Total surface. Used for calculation rule.</li>
-    <li><strong>Target CG:</strong> Your ideal flying CG.</li>
-</ul>
-<p><strong>Ballast Chambers:</strong></p>
-<ul>
-    <li><strong>Dist:</strong> Distance from LE. Positive for rear, negative for nose.</li>
-    <li><strong>Max Qty:</strong> Number of slugs per chamber.</li>
-    <li><strong>Stock:</strong> Amount you actually own.</li>
-</ul>
-<h3>3. Calculator ("Optimization" View)</h3>
-<ul>
-    <li><strong>Wind (m/s):</strong> Current wind speed.</li>
-    <li><strong>Factor %:</strong> Load adjustment (100% is standard).</li>
-    <li><strong>Target:</strong> Calculated ideal weight.</li>
-    <li><strong>CG (mm):</strong> GREEN if ok, RED if out of range.</li>
-</ul>
-<h3>4. Auto-Optimization (Magic Wand)</h3>
-<ul>
-    <li><strong>Priority #1:</strong> Never exceed safety tolerances.</li>
-    <li><strong>Priority #2:</strong> Get CG as close as possible to target.</li>
-</ul>
-`
+        help_html: `<h3>Help</h3><p>Use Configuration button to setup your models.</p>`
     },
     es: {
         new_model: "+ NUEVO MODELO", logbook_btn: "📓 REGISTRO DE VUELOS", back: "VOLVER", config: "CONFIG",
@@ -168,33 +91,27 @@ const dict = {
         export_all: "EXPORTAR TODO (.json)", import_btn: "IMPORTAR",
         msg_import_success: "¡Importación exitosa!", msg_import_err: "Error al importar.",
         msg_replace_all: "¿Reemplazar todos los datos?", msg_add_model: "Modelo detectado: ", msg_add_model_q: "¿Añadir a la lista?",
-        help_html: `
-<h3>1. Inicio (Gestión de flota)</h3>
-<ul>
-    <li><strong>Lista:</strong> Modelos guardados. Toque para abrir el calculador.</li>
-    <li><strong>"+":</strong> Crear nuevo modelo.</li>
-    <li><strong>Registro:</strong> Historial de vuelos.</li>
-</ul>
-<h3>2. Configuración (Vista "CONFIG")</h3>
-<ul>
-    <li><strong>Peso/CDG Vacío:</strong> Medidos sin lastre.</li>
-    <li><strong>Superficie Alar:</strong> Usada para el cálculo de carga.</li>
-</ul>
-<h3>3. Calculador ("Optimización")</h3>
-<ul>
-    <li><strong>Viento (m/s):</strong> Velocidad medida.</li>
-    <li><strong>Objetivo:</strong> Peso ideal calculado automáticamente.</li>
-    <li><strong>CDG (mm):</strong> VERDE si es ok, ROJO si está fuera de rango.</li>
-</ul>
-`
+        help_html: `<h3>Ayuda</h3>`
     }
 };
 
 /* --- VARIABLES D'ÉTAT --- */
-let gliders = [], flightLogs = [], globalCoefs = { a: 0.16, b: 1.82, refArea: 62, v1:3, m1:2.3, v2:20, m2:5.0 }, currentGliderId = null, tempGlider = null;
-let optParams = { wMin: 75, wMax: 20, cgTolPlus: 0.5, cgTolMinus: 0.5 };
+let gliders = [];
+let flightLogs = [];
+let currentGliderId = null;
+let tempGlider = null;
 let currentLang = localStorage.getItem('f3f_lang') || 'fr';
 let currentTheme = localStorage.getItem('f3f_theme_style') || 'cyber';
+let optParams = { wMin: 75, wMax: 20, cgTolPlus: 0.5, cgTolMinus: 0.5 };
+
+// NOUVELLE VARIABLE MAÎTRE POUR LA COURBE (Remplace globalCoefs petit à petit)
+let globalCurve = {
+    v1: 3, m1: 2.3,      // Point 1
+    v2: 20, m2: 5.0,     // Point 2
+    activeBilinear: false,
+    vP: 10, mP: 3.5,     // Pivot
+    refArea: 62          // Surface Ref
+};
 
 /* --- FONCTIONS UTILITAIRES --- */
 function t(key) { return (dict[currentLang] && dict[currentLang][key]) ? dict[currentLang][key] : key; }
@@ -210,65 +127,197 @@ function hexToRgba(hex, alpha) {
     return 'rgba(255,255,255,0.05)';
 }
 
-function calculateAB() {
-    let x1 = parseFloat(globalCoefs.v1);
-    let y1 = parseFloat(globalCoefs.m1); 
-    let x2 = parseFloat(globalCoefs.v2);
-    let y2 = parseFloat(globalCoefs.m2);
-    if (x2 === x1) x2 += 0.1; 
-    globalCoefs.a = (y2 - y1) / (x2 - x1);
-    globalCoefs.b = y1 - (globalCoefs.a * x1);
+/* =========================================
+   INITIALISATION (Démarrage)
+   ========================================= */
+window.addEventListener('load', initApp);
 
-    const elA = document.getElementById('disp-coef-a');
-    const elB = document.getElementById('disp-coef-b');
-    if(elA) elA.innerText = globalCoefs.a.toFixed(3);
-    if(elB) elB.innerText = globalCoefs.b.toFixed(3);
+function initApp() {
+    gliders = JSON.parse(localStorage.getItem('f3f_gliders')) || [];
+    flightLogs = JSON.parse(localStorage.getItem('f3f_logs')) || [];
+    let savedOpt = JSON.parse(localStorage.getItem('f3f_opt_params'));
+    if(savedOpt) optParams = savedOpt;
+    
+    // Chargement de la courbe (Nouveau système)
+    loadCurveParams();
+    
+    // Chargement des options d'optimisation
+    document.getElementById('set-tol-w-min').value = optParams.wMin; 
+    document.getElementById('set-tol-w-max').value = optParams.wMax;
+    document.getElementById('set-tol-cg-plus').value = optParams.cgTolPlus; 
+    document.getElementById('set-tol-cg-minus').value = optParams.cgTolMinus;
+
+    window.setTheme(currentTheme);
+    
+    // Correction compatibilité vieux stockages
+    gliders.forEach(g => { if(Array.isArray(g.loadout) && typeof g.loadout[0] === 'number') g.loadout = g.loadout.map(v => ({ b: v, l: 0, t: 0 })); });
+    
+    document.getElementById('lang-select').value = currentLang; 
+    document.getElementById('theme-select').value = currentTheme; 
+    updateUITexts(); 
+    showView('home');
+}
+
+/* =========================================
+   GESTION DE LA COURBE (DOUBLE PENTE / PIVOT)
+   ========================================= */
+
+// Charge les paramètres depuis le stockage
+function loadCurveParams() {
+    // On essaie de charger le nouveau format
+    const savedCurve = localStorage.getItem('f3f_curve_params');
+    
+    if (savedCurve) {
+        globalCurve = JSON.parse(savedCurve);
+    } else {
+        // Migration depuis l'ancien format (globalCoefs) si existe
+        const oldCoefs = JSON.parse(localStorage.getItem('f3f_global_coefs'));
+        if (oldCoefs) {
+            globalCurve.v1 = oldCoefs.v1 || 3;
+            globalCurve.m1 = oldCoefs.m1 || 2.3;
+            globalCurve.v2 = oldCoefs.v2 || 20;
+            globalCurve.m2 = oldCoefs.m2 || 5.0;
+            globalCurve.refArea = oldCoefs.refArea || 62;
+        }
+    }
+
+    // Mise à jour des Inputs HTML Settings
+    safeSetValue('set-v1', globalCurve.v1);
+    safeSetValue('set-m1', globalCurve.m1);
+    safeSetValue('set-v2', globalCurve.v2);
+    safeSetValue('set-m2', globalCurve.m2);
+    safeSetValue('set-ref-area', globalCurve.refArea);
+    
+    // Pivot & Switch
+    safeSetValue('set-v-pivot', globalCurve.vP || 10);
+    safeSetValue('set-m-pivot', globalCurve.mP || 3.5);
+    
+    const check = document.getElementById('check-bilinear');
+    if(check) {
+        check.checked = globalCurve.activeBilinear;
+        toggleBilinearMode(false); // Init UI
+    }
+    
+    // On lance le premier calcul de courbe
+    calculateCurve();
+}
+
+function safeSetValue(id, val) {
+    const el = document.getElementById(id);
+    if(el) el.value = val;
+}
+
+// Active/Désactive l'affichage du bloc pivot
+window.toggleBilinearMode = function(recalc = true) {
+    const check = document.getElementById('check-bilinear');
+    const block = document.getElementById('block-pivot');
+    if(!check || !block) return;
+    
+    if (check.checked) {
+        block.classList.remove('hidden');
+    } else {
+        block.classList.add('hidden');
+    }
+    if (recalc) calculateCurve();
+};
+
+// Sauvegarde et Recalcul global
+window.calculateCurve = function() {
+    // 1. Lecture des inputs
+    globalCurve.v1 = parseFloat(document.getElementById('set-v1').value) || 0;
+    globalCurve.m1 = parseFloat(document.getElementById('set-m1').value) || 0;
+    globalCurve.v2 = parseFloat(document.getElementById('set-v2').value) || 25;
+    globalCurve.m2 = parseFloat(document.getElementById('set-m2').value) || 0;
+    globalCurve.refArea = parseFloat(document.getElementById('set-ref-area').value) || 62;
+    
+    globalCurve.activeBilinear = document.getElementById('check-bilinear').checked;
+    globalCurve.vP = parseFloat(document.getElementById('set-v-pivot').value) || 10;
+    globalCurve.mP = parseFloat(document.getElementById('set-m-pivot').value) || 0;
+
+    // 2. Sauvegarde
+    localStorage.setItem('f3f_curve_params', JSON.stringify(globalCurve));
+    // (Legacy backup pour compatibilité)
+    localStorage.setItem('f3f_global_coefs', JSON.stringify({
+        v1: globalCurve.v1, m1: globalCurve.m1, v2: globalCurve.v2, m2: globalCurve.m2, refArea: globalCurve.refArea
+    }));
+
+    // 3. Mise à jour graphique
     updateSettingsChart();
+};
+
+// FONCTION MATHÉMATIQUE MAÎTRESSE
+// Remplace l'ancien "a * x + b"
+function getTargetWeightForWind(wind) {
+    let w = parseFloat(wind);
+    if(isNaN(w) || w < 0) w = 0;
+
+    if (!globalCurve.activeBilinear) {
+        // Mode LINEAIRE (Simple)
+        let slope = (globalCurve.m2 - globalCurve.m1) / (globalCurve.v2 - globalCurve.v1);
+        let intercept = globalCurve.m1 - (slope * globalCurve.v1);
+        return (slope * w) + intercept;
+    } else {
+        // Mode BILINEAIRE (Double pente)
+        if (w <= globalCurve.vP) {
+            // Avant le pivot
+            let slope1 = (globalCurve.mP - globalCurve.m1) / (globalCurve.vP - globalCurve.v1);
+            let intercept1 = globalCurve.m1 - (slope1 * globalCurve.v1);
+            return (slope1 * w) + intercept1;
+        } else {
+            // Après le pivot
+            let slope2 = (globalCurve.m2 - globalCurve.mP) / (globalCurve.v2 - globalCurve.vP);
+            let intercept2 = globalCurve.mP - (slope2 * globalCurve.vP);
+            return (slope2 * w) + intercept2;
+        }
+    }
+}
+
+// Ancien helper mis à jour pour utiliser la nouvelle logique
+function getCalculatedTargetWeight(w, f, gliderArea) {
+    if (isNaN(w) || isNaN(f)) return 0;
+    
+    // 1. Poids de base selon la courbe (kg)
+    let baseKg = getTargetWeightForWind(w);
+    let baseTarget = baseKg * 1000; // en grammes
+    
+    // 2. Règle de 3 Surface
+    let ratio = (gliderArea && gliderArea > 0 && globalCurve.refArea > 0) ? gliderArea / globalCurve.refArea : 1;
+    
+    // 3. Facteur et retour
+    return baseTarget * ratio * (f/100);
 }
 
 
-let settingsChart = null;
-
-/* --- FONCTION DESSIN "NUCLÉAIRE" (Supprime et recrée) --- */
+/* --- GRAPHIQUE NUCLÉAIRE (Refonte totale à chaque appel) --- */
 function updateSettingsChart() {
-    console.log("--> CHARGEMENT COURBE ORANGE...");
-
-    // 1. On récupère le conteneur (la div autour du canvas)
-    // IMPORTANT : Assure-toi que ton canvas est bien dans une div parent dans index.html
     const canvas = document.getElementById('settings-chart');
     if (!canvas) return;
     
-    const parentContainer = canvas.parentElement; 
-
-    // 2. SUPPRESSION TOTALE
-    // On vide le conteneur. L'ancien graphique est détruit avec le HTML.
-    parentContainer.innerHTML = ''; 
-
-    // 3. RECRÉATION DU CANVAS
-    // On remet un canvas tout neuf
+    // Reset du DOM pour éviter les conflits Chart.js
+    const parent = canvas.parentElement;
+    parent.innerHTML = ''; 
     const newCanvas = document.createElement('canvas');
     newCanvas.id = 'settings-chart';
     newCanvas.style.width = '100%';
-    newCanvas.style.height = '200px'; // Hauteur forcée
-    parentContainer.appendChild(newCanvas);
+    newCanvas.style.height = '200px';
+    parent.appendChild(newCanvas);
 
-    // 4. CALCUL DES DONNÉES
+    // Calcul des données
     const labels = [];
     const dataUser = [];
     const dataRef = [];
 
     for (let i = 0; i <= 25; i++) {
         labels.push(i);
-        // Ta courbe (Bleue)
-        let vUser = (globalCoefs.a * i + globalCoefs.b);
+        // Courbe utilisateur
+        let vUser = getTargetWeightForWind(i);
         dataUser.push(vUser < 0 ? 0 : vUser);
-        
-        // Courbe Aeromod (Orange)
-        let vRef = (0.1 * i + 2.0);
-        dataRef.push(vRef);
+        // Courbe Ref Aeromod (0.1x + 2.0)
+        dataRef.push(0.1 * i + 2.0);
     }
 
-    // 5. DESSIN
+    if (typeof Chart === 'undefined') return;
+
     new Chart(newCanvas, {
         type: 'line',
         data: {
@@ -280,7 +329,7 @@ function updateSettingsChart() {
                     borderColor: '#0d6efd',
                     backgroundColor: 'rgba(13, 110, 253, 0.1)',
                     borderWidth: 3,
-                    tension: 0.3,
+                    tension: 0.1, // Faible tension pour voir la cassure
                     fill: true,
                     pointRadius: 0,
                     pointHitRadius: 20,
@@ -289,7 +338,7 @@ function updateSettingsChart() {
                 {
                     label: 'Ref. Aeromod',
                     data: dataRef,
-                    borderColor: '#ff9800', // ORANGE VIF
+                    borderColor: '#ff9800',
                     borderWidth: 2,
                     borderDash: [5, 5],
                     tension: 0.3,
@@ -303,32 +352,27 @@ function updateSettingsChart() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: false, // Affichage instantané
-            interaction: {
-                mode: 'index',      // Affiche les infos partout sur l'axe X
-                intersect: false,   // Pas besoin de toucher la ligne
-            },
-            plugins: {
-                legend: { display: true },
-                tooltip: {
-                    callbacks: {
-                        title: (items) => 'Vent : ' + items[0].label + ' m/s'
-                    }
-                }
+            animation: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: { 
+                legend: { display: true, labels: { color: '#888' } },
+                tooltip: { callbacks: { title: (i) => 'Vent : ' + i[0].label + ' m/s' } }
             },
             scales: {
-                x: { title: { display: true, text: 'Vent (m/s)' } },
-                y: { title: { display: true, text: 'Poids (kg)' } }
+                x: { title: {display:true, text:'Vent (m/s)'}, grid:{color:'rgba(255,255,255,0.05)'} }, 
+                y: { title: {display:true, text:'Poids (kg)'}, grid:{color:'rgba(255,255,255,0.05)'} } 
             }
         }
     });
 }
-function getCalculatedTargetWeight(w, f, gliderArea) {
-    if (isNaN(w) || isNaN(f)) return 0;
-    let baseTarget = (globalCoefs.a * w + globalCoefs.b) * 1000;
-    let ratio = (gliderArea && gliderArea > 0 && globalCoefs.refArea > 0) ? gliderArea / globalCoefs.refArea : 1;
-    return baseTarget * ratio * (f/100);
-}
+
+// Sauvegarde des coefs (alias pour backward compatibility UI)
+window.saveGlobalCoefs = function() { calculateCurve(); };
+
+
+/* =========================================
+   LOGIQUE MÉTIER & UI (Stocks, Soutes...)
+   ========================================= */
 
 function getEffectiveStock(g, idx, typeFull) {
     const c = g.chambers[idx];
@@ -341,7 +385,7 @@ function getEffectiveStock(g, idx, typeFull) {
     return { val: (parseFloat(c[stockKey]) || 0), isGroup: false };
 }
 
-/* --- AFFICHAGE & NAVIGATION --- */
+/* --- NAVIGATION --- */
 window.navigateTo = function(v, id=null) { 
     if(id) currentGliderId=id; 
     history.pushState({v,id}, ""); 
@@ -356,6 +400,8 @@ function showView(n) {
     if(n==='home') renderList(); 
     if(n==='calc') renderCalc(); 
     if(n==='logbook') showLogbook();
+    // Si Settings, on redessine le graph
+    if(n==='settings') setTimeout(calculateCurve, 100);
 }
 
 window.showModal = function(msg, withInp, btns, cb, def="") {
@@ -409,18 +455,9 @@ function renderCalc() {
     const noseContainer = document.getElementById('nose-ballast-container');
     const noseColor = g.noseColor || '#d63384';
     const noseMass = g.noseMass || 0;
-
-    // --- CORRECTION : MÉMOIRE D'ÉTAT ---
-    // On regarde si l'élément existe DÉJÀ dans la page
     const existingNose = document.getElementById('nose-ballast-ui');
-    let isCollapsed = (noseMass <= 0); // Par défaut (premier chargement) c'est fermé si 0
-
-    // Mais si l'élément existait déjà, on respecte le choix de l'utilisateur (ouvert ou fermé)
-    // peu importe la valeur du poids.
-    if (existingNose) {
-        isCollapsed = existingNose.classList.contains('collapsed');
-    }
-    // -----------------------------------
+    let isCollapsed = (noseMass <= 0); 
+    if (existingNose) { isCollapsed = existingNose.classList.contains('collapsed'); }
 
     noseContainer.innerHTML = `
         <div class="ballast-line ${isCollapsed ? 'collapsed' : ''} nose-card" id="nose-ballast-ui" onclick="if(event.target.tagName!=='BUTTON' && event.target.tagName!=='INPUT') this.classList.toggle('collapsed')">
@@ -536,7 +573,10 @@ function recalc(g) {
     
     const wVal = parseFloat(document.getElementById('inp-wind').value) || 0;
     const fVal = parseFloat(document.getElementById('inp-factor').value) || 100;
+    
+    // UTILISATION DE LA NOUVELLE FONCTION DE CIBLE
     let target = getCalculatedTargetWeight(wVal, fVal, g.area);
+    
     let weightDiff = m - target;
     wEl.style.color = (weightDiff >= -optParams.wMin && weightDiff <= optParams.wMax) ? 'var(--success)' : 'var(--warning)';
 
@@ -642,15 +682,24 @@ window.autoFillBallast = function() {
     g.loadout = bestLoadout; save(); renderCalc();
 };
 
+window.saveOptParams = function() { 
+    optParams.wMin = parseFloat(document.getElementById('set-tol-w-min').value) || 0; 
+    optParams.wMax = parseFloat(document.getElementById('set-tol-w-max').value) || 0; 
+    optParams.cgTolPlus = parseFloat(document.getElementById('set-tol-cg-plus').value) || 0.1; 
+    optParams.cgTolMinus = parseFloat(document.getElementById('set-tol-cg-minus').value) || 0.1; 
+    save(); 
+};
+
 /* --- DATA & IMPORT/EXPORT --- */
 window.exportData = function(type) {
     let exportObj = {}, fileName = "f3f_backup.json";
     if(type === 'all') {
-        exportObj = { type: 'backup_full', version: '5.25', date: new Date().toISOString(), gliders: gliders, logs: flightLogs, coefs: globalCoefs, opts: optParams };
+        // Inclusion de la nouvelle courbe dans l'export
+        exportObj = { type: 'backup_full', version: '5.35', date: new Date().toISOString(), gliders: gliders, logs: flightLogs, coefs: globalCurve, opts: optParams };
         fileName = `f3f_full_backup_${new Date().toISOString().slice(0,10)}.json`;
     } else if (type === 'model') {
         if(!tempGlider) return;
-        exportObj = { type: 'backup_model', version: '5.25', data: tempGlider };
+        exportObj = { type: 'backup_model', version: '5.35', data: tempGlider };
         fileName = `${tempGlider.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`;
     }
     const blob = new Blob([JSON.stringify(exportObj, null, 2)], {type: 'application/json'});
@@ -677,7 +726,17 @@ function processImport(data) {
     if(!data.type) { window.customAlert(t('msg_import_err')); return; }
     if(data.type === 'backup_full') {
         window.showModal(t('msg_replace_all'), false, [{tx:t('cancel'), cl:'btn-outline', val:0}, {tx:t('yes'), cl:'btn-danger', val:1}], (r) => {
-            if(r) { gliders = data.gliders || []; flightLogs = data.logs || []; globalCoefs = data.coefs || globalCoefs; optParams = data.opts || optParams; save(); window.location.reload(); }
+            if(r) { 
+                gliders = data.gliders || []; 
+                flightLogs = data.logs || []; 
+                if(data.coefs) {
+                    // Support rétroactif import
+                    if(data.coefs.v1 !== undefined) globalCurve = data.coefs; 
+                }
+                optParams = data.opts || optParams; 
+                save(); 
+                window.location.reload(); 
+            }
         });
     } else if (data.type === 'backup_model') {
         let m = data.data;
@@ -777,12 +836,11 @@ function renderEdit() {
 }
 window.upc = function(i,k,v) { if(k==='name'||k==='color') tempGlider.chambers[i][k]=v; else { let val = parseFloat(v); if(isNaN(val)) val = null; tempGlider.chambers[i][k]=val; } };
 window.rmCh = function(i) {
-    saveEditState(); // <--- ON SAUVEGARDE D'ABORD
+    saveEditState();
     tempGlider.chambers.splice(i,1);
     renderEdit();
 };
 window.resetColor = function(t) { if(t==='nose') { document.getElementById('edit-nose-color').value = '#d63384'; tempGlider.noseColor = '#d63384'; } else { tempGlider.chambers[t].color = '#888888'; renderEdit(); } };
-// --- NOUVELLE FONCTION POUR SAUVEGARDER L'ÉTAT AVANT RE-RENDER ---
 function saveEditState() {
     tempGlider.name = document.getElementById('edit-name').value;
     tempGlider.emptyW = parseFloat(document.getElementById('edit-empty-w').value);
@@ -793,12 +851,12 @@ function saveEditState() {
     tempGlider.noseColor = document.getElementById('edit-nose-color').value;
 }
 window.addChamberLine = function() {
-    saveEditState(); // <--- ON SAUVEGARDE D'ABORD
+    saveEditState(); 
     tempGlider.chambers.push({name:"BALLAST", dist:0, max:5, mass_brass:0, mass_lead:0, mass_tungsten:0, color:"#888888"});
     renderEdit();
 };
 window.duplicateGlider = function() {
-    saveEditState(); // On récupère tout
+    saveEditState(); 
     let newG = JSON.parse(JSON.stringify(tempGlider));
     newG.id = Date.now();
     newG.name += t('copy_suffix');
@@ -813,180 +871,10 @@ window.saveGlider = function() { tempGlider.name = document.getElementById('edit
 window.confirmDeleteGlider = function() { window.showModal(t('msg_del_mod'), false, [{tx:t('cancel'), cl:"btn-outline", val:0}, {tx:t('delete_model'), cl:"btn-danger", val:1}], (r) => { if(r) { gliders = gliders.filter(x=>x.id!==tempGlider.id); save(); window.navigateTo('home'); } }); };
 window.confirmResetLoadout = function() { window.showModal(t('msg_reset'), false, [{tx:t('no'), cl:"btn-outline", val:0}, {tx:t('yes'), cl:"btn-danger", val:1}], (r) => { if(r) { const g = gliders.find(x=>x.id==currentGliderId); g.loadout = g.loadout.map(() => ({b:0, l:0, t:0})); save(); renderCalc(); } }); };
 
-/* --- SAVE & INIT --- */
 function save() { 
     localStorage.setItem('f3f_gliders', JSON.stringify(gliders)); 
     localStorage.setItem('f3f_logs', JSON.stringify(flightLogs)); 
-    localStorage.setItem('f3f_global_coefs', JSON.stringify(globalCoefs)); 
+    // On sauvegarde la courbe dans les deux formats pour être sûr
+    localStorage.setItem('f3f_curve_params', JSON.stringify(globalCurve)); 
     localStorage.setItem('f3f_opt_params', JSON.stringify(optParams)); 
 }
-
-window.saveGlobalCoefs = function() { 
-    globalCoefs.v1 = parseFloat(document.getElementById('set-v1').value) || 0; 
-    globalCoefs.m1 = parseFloat(document.getElementById('set-m1').value) || 0; 
-    globalCoefs.v2 = parseFloat(document.getElementById('set-v2').value) || 20; 
-    globalCoefs.m2 = parseFloat(document.getElementById('set-m2').value) || 5; 
-    globalCoefs.refArea = parseFloat(document.getElementById('set-ref-area').value); 
-    calculateAB(); 
-    save(); 
-};
-
-window.saveOptParams = function() { 
-    optParams.wMin = parseFloat(document.getElementById('set-tol-w-min').value) || 0; 
-    optParams.wMax = parseFloat(document.getElementById('set-tol-w-max').value) || 0; 
-    optParams.cgTolPlus = parseFloat(document.getElementById('set-tol-cg-plus').value) || 0.1; 
-    optParams.cgTolMinus = parseFloat(document.getElementById('set-tol-cg-minus').value) || 0.1; 
-    save(); 
-};
-
-function initApp() {
-    gliders = JSON.parse(localStorage.getItem('f3f_gliders')) || [];
-    flightLogs = JSON.parse(localStorage.getItem('f3f_logs')) || [];
-    let savedCoefs = JSON.parse(localStorage.getItem('f3f_global_coefs'));
-    
-    if (!savedCoefs) { 
-        globalCoefs = { a: 0.16, b: 1.82, refArea: 62, v1:3, m1:2.3, v2:20, m2:5.0 }; 
-        save(); 
-    } else { 
-        globalCoefs = savedCoefs; 
-        if(!globalCoefs.refArea) { globalCoefs.refArea = 62; save(); } 
-    }
-    
-    let savedOpt = JSON.parse(localStorage.getItem('f3f_opt_params'));
-    if(savedOpt) optParams = savedOpt;
-    
-    document.getElementById('set-v1').value = globalCoefs.v1; 
-    document.getElementById('set-m1').value = globalCoefs.m1;
-    document.getElementById('set-v2').value = globalCoefs.v2; 
-    document.getElementById('set-m2').value = globalCoefs.m2;
-    document.getElementById('set-ref-area').value = globalCoefs.refArea || 62;
-    document.getElementById('set-tol-w-min').value = optParams.wMin; 
-    document.getElementById('set-tol-w-max').value = optParams.wMax;
-    document.getElementById('set-tol-cg-plus').value = optParams.cgTolPlus; 
-    document.getElementById('set-tol-cg-minus').value = optParams.cgTolMinus;
-    
-    calculateAB(); 
-    window.setTheme(currentTheme);
-    gliders.forEach(g => { if(Array.isArray(g.loadout) && typeof g.loadout[0] === 'number') g.loadout = g.loadout.map(v => ({ b: v, l: 0, t: 0 })); });
-    save();
-    
-    document.getElementById('lang-select').value = currentLang; 
-    document.getElementById('theme-select').value = currentTheme; 
-    updateUITexts(); 
-    showView('home');
-
-    /* --- FONCTION DESSIN GRAPHIQUE --- */
-/* --- FONCTION DESSIN GRAPHIQUE (Version Fluide) --- */
-/* --- FONCTION DESSIN GRAPHIQUE (Comparatif Aeromod) --- */
-/* --- FONCTION DESSIN GRAPHIQUE (Corrigée & Visible) --- */
-/* --- FONCTION DESSIN GRAPHIQUE (Version "Bulldozer") --- */
-let settingsChart = null;
-
-/* --- FONCTION DESSIN GRAPHIQUE (Version Blindée) --- */
-function updateSettingsChart() {
-    console.log("--> CHARGEMENT DU GRAPHIQUE ORANGE...");
-    const ctx = document.getElementById('settings-chart');
-    if (!ctx) return;
-
-    // 1. DÉTECTION ET DESTRUCTION (Méthode radicale)
-    // On demande à Chart.js s'il y a déjà un graphique sur ce canvas
-    const existingChart = Chart.getChart(ctx);
-    if (existingChart) {
-        existingChart.destroy(); // On le détruit totalement
-    }
-
-    // 2. PRÉPARATION DES DONNÉES (De 0 à 25, tous les 1 m/s)
-    const labels = [];      // Axe X (0, 1, 2...)
-    const dataUser = [];    // Ta courbe
-    const dataRef = [];     // Ref Aeromod
-    
-    for (let i = 0; i <= 25; i++) { 
-        labels.push(i);
-        
-        // Calcul TA courbe (Bleue)
-        let valUser = (globalCoefs.a * i + globalCoefs.b);
-        dataUser.push(valUser < 0 ? 0 : valUser); // On garde le chiffre exact (float)
-
-        // Calcul Ref AEROMOD (Orange) : y = 0.1x + 2.0
-        let valRef = (0.1 * i + 2.0);
-        dataRef.push(valRef);
-    }
-
-    // 3. CRÉATION DU NOUVEAU GRAPHIQUE
-    // Sécurité : Vérifie que la librairie est chargée
-    if (typeof Chart === 'undefined') return;
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels, // 0, 1, 2, ... 25
-            datasets: [
-                {
-                    label: 'Ma Config',
-                    data: dataUser,
-                    borderColor: '#0d6efd', // Bleu
-                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
-                    borderWidth: 3,
-                    tension: 0.3,
-                    fill: true,
-                    pointRadius: 0,       // Pas de points visibles
-                    pointHitRadius: 20,   // Zone de détection large
-                    order: 1
-                },
-                {
-                    label: 'Ref. Aeromod',
-                    data: dataRef,
-                    borderColor: '#ff9800', // Orange Vif
-                    borderWidth: 2,
-                    borderDash: [5, 5],     // Pointillés
-                    tension: 0.3,
-                    fill: false,
-                    pointRadius: 0,
-                    pointHitRadius: 0,      // On ne clique pas dessus
-                    order: 0                // Dessiné par-dessus
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: false, // Pas d'animation pour l'instantanéité
-            interaction: {
-                mode: 'index',    // Affiche les infos de l'axe X (toutes les courbes)
-                intersect: false, // Pas besoin de toucher la ligne !
-            },
-            plugins: { 
-                legend: { display: true, labels: { color: '#ccc' } },
-                tooltip: {
-                    displayColors: true,
-                    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                    titleColor: '#fff',
-                    bodyColor: '#fff',
-                    callbacks: {
-                        title: (items) => 'Vent : ' + items[0].label + ' m/s',
-                        label: (item) => {
-                            // Formatage propre : "Ma Config : 2.50 kg"
-                            return item.dataset.label + ' : ' + Number(item.raw).toFixed(2) + ' kg';
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: { 
-                    title: { display: true, text: 'Vent (m/s)', color:'#666' },
-                    grid: { color: 'rgba(255,255,255,0.05)' },
-                    ticks: { color: '#888' }
-                },
-                y: { 
-                    title: { display: true, text: 'Poids (kg)', color:'#666' },
-                    grid: { color: 'rgba(255,255,255,0.05)' },
-                    ticks: { color: '#888' }
-                }
-            }
-        }
-    });
-}
-}
-
-window.addEventListener('load', initApp);
-// FIN DU FICHIER
