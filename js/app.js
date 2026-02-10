@@ -3,6 +3,7 @@
    ========================================= */
 
 /* --- DICTIONNAIRE DE TRADUCTION --- */
+/* --- DICTIONNAIRE DE TRADUCTION (Aide Restaurée) --- */
 const dict = {
     fr: {
         new_model: "+ NOUVEAU MODÈLE", logbook_btn: "📓 JOURNAL DES VOLS", back: "RETOUR", config: "CONFIG",
@@ -10,7 +11,7 @@ const dict = {
         opt_title: "OPTIMISATION", opt_desc: "Réglages des limites acceptables pour l'algorithme.",
         lbl_tol_w_min: "Tol. Poids Moins (-g)", lbl_tol_w_max: "Tol. Poids Plus (+g)",
         lbl_tol_cg_plus: "Tol. CG + (mm)", lbl_tol_cg_min: "Tol. CG - (mm)",
-        gl_desc: "Définissez la courbe de ballastage.",
+        gl_desc: "Définissez la courbe de ballastage pour un planeur standard.",
         pt1: "POINT 1 (Léger/Vide)", pt2: "POINT 2 (Lourd/Max)", lbl_weight_kg: "Poids (kg)",
         ref_surf: "Surface Référence (dm²) FAI", res_int: "Résultat interne:",
         stat_target: "CIBLE", stat_current: "ACTUEL", stat_cg: "CG (mm)", wind: "Vent (m/s)", factor: "Facteur %", optimize: "🪄 OPTIMISER",
@@ -33,7 +34,57 @@ const dict = {
         msg_import_success: "Importation réussie !", msg_import_err: "Erreur lors de l'import.",
         msg_replace_all: "Attention : Ceci va REMPLACER tous vos modèles et logs actuels. Continuer ?",
         msg_add_model: "Modèle détecté : ", msg_add_model_q: "Voulez-vous l'ajouter à votre liste ?",
-        help_html: `<h3>Aide F3F Manager</h3><p>Utilisez le bouton Configuration pour régler vos modèles.</p>`
+        help_html: `
+<h3>1. Accueil (Gestion de la flotte planeur)</h3>
+<ul>
+    <li><strong>Liste des planeurs :</strong> Affiche vos modèles enregistrés avec leur poids à vide. Appuyez sur un nom pour ouvrir le calculateur.</li>
+    <li><strong>Bouton "+" (Nouveau Modèle) :</strong> Pour créer une nouvelle fiche technique.</li>
+    <li><strong>Journal des Vols :</strong> Accès à l'historique de vos sessions passées.</li>
+    <li><strong>Icônes du haut :</strong> Le "?" ouvre l'aide rapide et l'icône "Engrenage" ouvre les réglages globaux.</li>
+</ul>
+<h3>2. Création et Édition d'un Modèle (Vue "CONFIG")</h3>
+<p>C’est l'étape la plus importante pour la précision des calculs.</p>
+<ul>
+    <li><strong>Nom :</strong> Le nom de votre planeur (ex: Pitbull 2, Freestyler 6).</li>
+    <li><strong>Poids Vide & CG Vide :</strong> Le poids et le centre de gravité mesurés sans aucun lest.</li>
+    <li><strong>Surf. dm² FAI :</strong> La surface totale de l'aile et du stab. Elle est utilisée pour la "Règle de 3" par rapport à la surface de référence.</li>
+    <li><strong>CG Cible :</strong> Le CG idéal auquel vous souhaitez voler (l'application cherchera à s'en rapprocher au maximum).</li>
+</ul>
+<p><strong>Gestion des Chambres :</strong></p>
+<ul>
+    <li><strong>Dist :</strong> La distance entre le centre de la chambre et le bord d’attaque. Positif pour l’arrière, négatif pour la soute de nez.</li>
+    <li><strong>Qté Max :</strong> Nombre de gueuses que la chambre peut contenir.</li>
+    <li><strong>Masses Unitaires :</strong> Le poids d'une seule gueuse pour chaque matière (Laiton, Plomb, Tungstène).</li>
+    <li><strong>Stock :</strong> Indiquez combien de gueuses vous possédez réellement pour chaque matière.</li>
+    <li><strong>Soute nez :</strong> Cette soute ne rentre pas en compte dans l’optimisation. Elle est présente à titre indicatif.</li>
+    <li><strong>Distance Soute Nez :</strong> Indiquez la distance entre la soute de nez et le Bord d'Attaque.</li>
+</ul>
+<h3>3. Le Calculateur (Vue "Optimisation")</h3>
+<ul>
+    <li><strong>Vent (m/s) :</strong> Entrez la force du vent mesurée.</li>
+    <li><strong>Facteur % :</strong> Permet d'ajuster la charge (100% standard).</li>
+    <li><strong>Cible :</strong> Le poids total idéal calculé.</li>
+    <li><strong>CG (mm) :</strong> Devient VERT s'il est dans vos tolérances, ROUGE s'il s'en éloigne trop.</li>
+</ul>
+<h3>4. L'Optimisation Automatique (Baguette Magique)</h3>
+<ul>
+    <li><strong>Priorité n°1 :</strong> Ne jamais dépasser vos tolérances de sécurité.</li>
+    <li><strong>Priorité n°2 :</strong> Obtenir le CG le plus proche possible de votre cible.</li>
+    <li><strong>Priorité n°3 :</strong> Atteindre le poids cible.</li>
+</ul>
+<h3>5. Enregistrement des Vols</h3>
+<ul>
+    <li><strong>Pente :</strong> Le nom du lieu.</li>
+    <li><strong>Chrono :</strong> Votre temps sur la base (ex: 35.52).</li>
+    <li><strong>Note :</strong> Appuyez sur "Enregistrer" pour ouvrir une fenêtre de commentaire.</li>
+</ul>
+<h3>6. Paramètres Globaux (⚙️)</h3>
+<ul>
+    <li><strong>Tolérances Poids/CG :</strong> Définit à partir de quand les chiffres deviennent rouges.</li>
+    <li><strong>Point 1 et Point 2:</strong> Définit la pente de ballastageValeurs par défaut (F3F compétition) ou Aeromod (A=0.1 / B=2.0).</li>
+    <li><strong>Double pente:</strong> Permet de rajouter un point pivot pour mélanger 2 pents.</li>
+</ul>
+`
     },
     en: {
         new_model: "+ NEW MODEL", logbook_btn: "Flight Logs", back: "BACK", config: "CONFIG",
@@ -62,7 +113,38 @@ const dict = {
         export_all: "EXPORT ALL (.json)", import_btn: "IMPORT",
         msg_import_success: "Import successful!", msg_import_err: "Error importing.",
         msg_replace_all: "Replace all data?", msg_add_model: "Model detected: ", msg_add_model_q: "Add to list?",
-        help_html: `<h3>Help</h3><p>Use Configuration button to setup your models.</p>`
+        help_html: `
+<h3>1. Home (Fleet Management)</h3>
+<ul>
+    <li><strong>Glider List:</strong> Registered models. Tap to open calculator.</li>
+    <li><strong>"+" Button:</strong> Create new model sheet.</li>
+    <li><strong>Logs:</strong> Your session history.</li>
+</ul>
+<h3>2. Configuration ("CONFIG" View)</h3>
+<ul>
+    <li><strong>Empty Weight/CG:</strong> Measured without ballast.</li>
+    <li><strong>FAI Area:</strong> Total surface. Used for calculation rule.</li>
+    <li><strong>Target CG:</strong> Your ideal flying CG.</li>
+</ul>
+<p><strong>Ballast Chambers:</strong></p>
+<ul>
+    <li><strong>Dist:</strong> Distance from LE. Positive for rear, negative for nose.</li>
+    <li><strong>Max Qty:</strong> Number of slugs per chamber.</li>
+    <li><strong>Stock:</strong> Amount you actually own.</li>
+</ul>
+<h3>3. Calculator ("Optimization" View)</h3>
+<ul>
+    <li><strong>Wind (m/s):</strong> Current wind speed.</li>
+    <li><strong>Factor %:</strong> Load adjustment (100% is standard).</li>
+    <li><strong>Target:</strong> Calculated ideal weight.</li>
+    <li><strong>CG (mm):</strong> GREEN if ok, RED if out of range.</li>
+</ul>
+<h3>4. Auto-Optimization (Magic Wand)</h3>
+<ul>
+    <li><strong>Priority #1:</strong> Never exceed safety tolerances.</li>
+    <li><strong>Priority #2:</strong> Get CG as close as possible to target.</li>
+</ul>
+`
     },
     es: {
         new_model: "+ NUEVO MODELO", logbook_btn: "📓 REGISTRO DE VUELOS", back: "VOLVER", config: "CONFIG",
@@ -91,7 +173,25 @@ const dict = {
         export_all: "EXPORTAR TODO (.json)", import_btn: "IMPORTAR",
         msg_import_success: "¡Importación exitosa!", msg_import_err: "Error al importar.",
         msg_replace_all: "¿Reemplazar todos los datos?", msg_add_model: "Modelo detectado: ", msg_add_model_q: "¿Añadir a la lista?",
-        help_html: `<h3>Ayuda</h3>`
+        help_html: `
+<h3>1. Inicio (Gestión de flota)</h3>
+<ul>
+    <li><strong>Lista:</strong> Modelos guardados. Toque para abrir el calculador.</li>
+    <li><strong>"+":</strong> Crear nuevo modelo.</li>
+    <li><strong>Registro:</strong> Historial de vuelos.</li>
+</ul>
+<h3>2. Configuración (Vista "CONFIG")</h3>
+<ul>
+    <li><strong>Peso/CDG Vacío:</strong> Medidos sin lastre.</li>
+    <li><strong>Superficie Alar:</strong> Usada para el cálculo de carga.</li>
+</ul>
+<h3>3. Calculador ("Optimización")</h3>
+<ul>
+    <li><strong>Viento (m/s):</strong> Velocidad medida.</li>
+    <li><strong>Objetivo:</strong> Peso ideal calculado automáticamente.</li>
+    <li><strong>CDG (mm):</strong> VERDE si es ok, ROJO si está fuera de rango.</li>
+</ul>
+`
     }
 };
 
