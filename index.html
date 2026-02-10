@@ -151,23 +151,26 @@
     
     <div class="card dyno-card">
         <div class="row" style="margin-bottom:5px;">
-            <div style="flex:1; margin-right:5px;">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-        <label class="dyno-label" data-i18n="wind" style="margin-bottom:0;">Vent (m/s)</label>
-        <span style="font-size:0.75rem;">&nbsp;</span>
-    </div>
-    <input type="number" id="inp-wind" step="0.1" min="0" oninput="syncInputs('wind', this.value)">
-    <input type="range" id="rng-wind" min="0" max="25" step="0.1" oninput="syncInputs('wind', this.value)">
-</div>
-            <div style="flex:1">
-                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                    <label class="dyno-label" data-i18n="factor" style="margin-bottom:0;">Facteur %</label>
-                    <span id="alt-hint" style="font-size:0.75rem; color:var(--primary); font-weight:bold;">0m</span>
-                </div>
-                <input type="number" id="inp-factor" oninput="syncInputs('factor', this.value)">
-                <input type="range" id="rng-factor" min="50" max="120" step="1" oninput="syncInputs('factor', this.value)">
-            </div>
+    
+    <div style="flex:1; margin-right:5px;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2px;">
+            <label class="dyno-label" data-i18n="wind" style="margin:0; padding:0; line-height:1.2;">Vent (m/s)</label>
+            <span style="font-size:0.75rem; visibility:hidden;">0m</span>
         </div>
+        <input type="number" id="inp-wind" step="0.1" min="0" oninput="syncInputs('wind', this.value)">
+        <input type="range" id="rng-wind" min="0" max="25" step="0.1" oninput="syncInputs('wind', this.value)">
+    </div>
+
+    <div style="flex:1;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2px;">
+            <label class="dyno-label" data-i18n="factor" style="margin:0; padding:0; line-height:1.2;">Facteur %</label>
+            <span id="alt-hint" style="font-size:0.75rem; color:var(--primary); font-weight:bold;">0m</span>
+        </div>
+        <input type="number" id="inp-factor" oninput="syncInputs('factor', this.value)">
+        <input type="range" id="rng-factor" min="50" max="120" step="1" oninput="syncInputs('factor', this.value)">
+    </div>
+
+</div>
         <button class="btn btn-magic" onclick="autoFillBallast()" data-i18n="optimize">🪄 OPTIMISER</button>
     </div>
     
