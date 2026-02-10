@@ -624,6 +624,26 @@ function recalc(g) {
     const wVal = parseFloat(document.getElementById('inp-wind').value) || 0;
     const fVal = parseFloat(document.getElementById('inp-factor').value) || 100;
     
+    // --- AJOUT : LOGIQUE ALTITUDE VISUELLE ---
+    const altHint = document.getElementById('alt-hint');
+    if (altHint) {
+        if (fVal < 100) {
+            // Règle : 1% = 100m
+            // 90% -> 10% de moins -> 10 * 100 = 1000m
+            let altEstim = Math.round((100 - fVal) * 100);
+            altHint.innerText = "Alt. ~" + altEstim + "m";
+            altHint.style.color = "#29b6f6"; // Bleu ciel (Montagne)
+        } else if (fVal > 100) {
+            altHint.innerText = "Surcharge"; // Pour les bourrins
+            altHint.style.color = "#ff5252"; // Rouge
+        } else {
+            altHint.innerText = "Mer (0m)";
+            altHint.style.color = "var(--text-muted)";
+        }
+    }
+    // -----------------------------------------
+
+    
     // UTILISATION DE LA NOUVELLE FONCTION DE CIBLE
     let target = getCalculatedTargetWeight(wVal, fVal, g.area);
     
@@ -805,19 +825,103 @@ function updateLogFilters() {
     sSel.innerHTML = `<option value="">${t('all_slopes')}</option>` + slopes.map(s => `<option value="${s}">${s}</option>`).join('');
     if(models.includes(currM)) mSel.value = currM; if(slopes.includes(currS)) sSel.value = currS;
 }
+/* --- DANS window.renderLogs (Version Uniforme) --- */
 window.renderLogs = function() {
     const c = document.getElementById('logs-container'), fM = document.getElementById('filter-model').value, fS = document.getElementById('filter-slope').value;
     c.innerHTML = '';
+    
     flightLogs.filter(l => (!fM || l.m===fM) && (!fS || l.s===fS)).forEach(l => {
-        const d = document.createElement('div'); d.className = 'log-card'; const dt = new Date(l.d);
-        d.innerHTML = `<button class="log-del" onclick="window.confirmDeleteLog(${l.id})">×</button><div class="log-header"><div class="log-date-slope">${dt.toLocaleDateString()} | ${l.s || 'PENTE'}</div></div><div class="log-model">${l.m}</div><div class="log-stats"><span class="log-stat-item">⚖️ ${l.w}kg</span><span class="log-stat-item">🎯 ${l.cg}mm</span></div>${l.n ? `<div class="log-note">${l.n}</div>` : ''}`;
+        const d = document.createElement('div'); 
+        d.className = 'log-card'; 
+        const dt = new Date(l.d);
+        
+        // CRÉATION DES PASTILLES (Même style que le poids)
+        // On utilise uniquement la classe "log-stat-item" sans style inline
+        const windBadge = l.wind ? `<span class="log-stat-item">💨 ${l.wind}m/s</span>` : '';
+        const factorBadge = l.factor ? `<span class="log-stat-item">⚙️ ${l.factor}%</span>` : '';
+
+        d.innerHTML = `
+            <button class="log-del" onclick="window.confirmDeleteLog(${l.id})">×</button>
+            <div class="log-header">
+                <div class="log-date-slope">
+                    ${dt.toLocaleDateString()} | ${dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} | ${l.s || 'PENTE'}
+                </div>
+            </div>
+            <div class="log-model">${l.m}</div>
+            
+            <div class="log-stats">
+                <span class="log-stat-item">⚖️ ${l.w}kg</span>
+                <span class="log-stat-item">🎯 ${l.cg}mm</span>
+                ${windBadge}
+                ${factorBadge}
+            </div>
+            
+            ${l.n ? `<div class="log-note">${l.n}</div>` : ''}
+        `;
         c.appendChild(d);
     });
 };
 window.showLogbook = function() { updateLogFilters(); window.renderLogs(); };
-window.openSaveLogModal = function() { window.showModal(t('msg_note'), true, [{tx:t('cancel'), cl:"btn-outline", val:null}, {tx:t('save_flight'), cl:"btn-primary", val:"inp"}], (n) => { if(n!==null) { const g=gliders.find(x=>x.id==currentGliderId); flightLogs.unshift({id:Date.now(), d:new Date().toISOString(), m:g.name, w:document.getElementById('res-weight').innerText, cg:document.getElementById('res-cg').innerText, s:document.getElementById('inp-slope').value.toUpperCase(), n:n, wind:document.getElementById('inp-wind').value}); save(); window.customAlert(t('alert_saved')); } }); };
+window.openSaveLogModal = function() {
+    window.showModal(t('msg_note'), true, [{tx:t('cancel'), cl:"btn-outline", val:null}, {tx:t('save_flight'), cl:"btn-primary", val:"inp"}], (n) => {
+        if(n !== null) {
+            const g = gliders.find(x => x.id == currentGliderId);
+            // ON RÉCUPÈRE LES NOUVELLES DONNÉES ICI
+            const windVal = document.getElementById('inp-wind').value || 0;
+            const factorVal = document.getElementById('inp-factor').value || 100;
+
+            flightLogs.unshift({
+                id: Date.now(),
+                d: new Date().toISOString(),
+                m: g.name,
+                w: document.getElementById('res-weight').innerText,
+                cg: document.getElementById('res-cg').innerText,
+                s: document.getElementById('inp-slope').value.toUpperCase(),
+                n: n,
+                // ET ON LES AJOUTE À L'OBJET LOG
+                wind: windVal,
+                factor: factorVal
+            });
+            save();
+            window.customAlert(t('alert_saved'));
+        }
+    });
+};
 window.confirmDeleteLog = function(id) { window.showModal(t('msg_del_log'), false, [{tx:t('no'), cl:"btn-outline", val:0}, {tx:t('yes'), cl:"btn-danger", val:1}], (r) => { if(r) { flightLogs = flightLogs.filter(x=>x.id!==id); save(); window.renderLogs(); updateLogFilters(); } }); };
-window.exportLogsCSV = async function() { if(flightLogs.length === 0) return; let csv = "Date,Heure,Modele,Poids,Pente,Note\n"; flightLogs.forEach(l => { const dt = new Date(l.d); csv += `${dt.toLocaleDateString()},${dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})},${l.m},${l.w},${l.s},"${l.n}"\n`; }); try { await navigator.clipboard.writeText(csv); window.customAlert(t('alert_copied')); } catch (e) { const b = new Blob([csv], {type:'text/csv'}); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href=u; a.download='logs_F3F.csv'; a.click(); } };
+/* --- REMPLACE TOUTE LA FONCTION window.exportLogsCSV --- */
+window.exportLogsCSV = async function() {
+    if (flightLogs.length === 0) return;
+    
+    // 1. Nouvel En-tête avec Vent et Facteur
+    let csv = "Date,Heure,Modele,Poids(kg),CG(mm),Vent(m/s),Facteur(%),Pente,Note\n";
+    
+    flightLogs.forEach(l => {
+        const dt = new Date(l.d);
+        const dateStr = dt.toLocaleDateString();
+        const timeStr = dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        // Sécurité pour les vieux logs qui n'ont pas wind/factor
+        const wind = l.wind || ''; 
+        const factor = l.factor || '';
+        // On nettoie la note pour éviter de casser le CSV (échappement des guillemets)
+        const cleanNote = (l.n || '').replace(/"/g, '""');
+
+        // 2. Construction de la ligne avec les nouvelles valeurs
+        // On met des guillemets autour des chaînes de caractères pour sécuriser
+        csv += `"${dateStr}","${timeStr}","${l.m}",${l.w},${l.cg},${wind},${factor},"${l.s}","${cleanNote}"\n`;
+    });
+
+    try {
+        await navigator.clipboard.writeText(csv);
+        window.customAlert(t('alert_copied'));
+    } catch (e) {
+        const b = new Blob([csv], {type: 'text/csv'});
+        const u = URL.createObjectURL(b);
+        const a = document.createElement('a');
+        a.href = u;
+        a.download = 'logs_F3F.csv';
+        a.click();
+    }
+};
 
 /* --- CRUD MODEL --- */
 window.createNewGlider = function() { tempGlider = { id: Date.now(), name: "MODÈLE", emptyW: 2200, emptyCG: 100, area: 58, target: 102, chambers: [{ name: "AILES", dist: 100, mass_brass: 150, mass_lead: 200, mass_tungsten: 300, max: 10, color: "#888888" }], loadout: [{b:0,l:0,t:0}], noseDist: 0, noseMass: 0, noseColor: "#d63384" }; renderEdit(); window.navigateTo('edit'); };
