@@ -207,24 +207,34 @@ function safeSetValue(id, val) {
     if(el) el.value = val;
 }
 
-// Active/Désactive l'affichage du bloc pivot (Version Mobile Friendly)
 window.toggleBilinearMode = function(recalc = true) {
     const check = document.getElementById('check-bilinear');
     const block = document.getElementById('block-pivot');
-    if(!check || !block) return;
     
+    // 1. Test si la case existe
+    if (!check) {
+        alert("Erreur: Case à cocher introuvable !");
+        return;
+    }
+
+    // 2. Test si le bloc Pivot existe (C'est souvent là que ça coince sur mobile)
+    if (!block) {
+        alert("ERREUR CACHE : Le bloc 'Pivot' n'existe pas dans le HTML de ce téléphone. Videz le cache !");
+        return;
+    }
+    
+    // 3. Force l'affichage sans passer par les classes CSS (plus fiable)
     if (check.checked) {
         block.classList.remove('hidden');
-        block.style.display = 'block'; // <--- FORCE L'AFFICHAGE DIRECTEMENT
+        block.style.display = 'block'; // Force brute
+        // Petit effet visuel pour confirmer
+        block.style.backgroundColor = 'rgba(13, 110, 253, 0.2)'; 
     } else {
         block.classList.add('hidden');
-        block.style.display = 'none';  // <--- FORCE LE MASQUAGE
+        block.style.display = 'none'; // Force brute
     }
     
-    // On force le recalcul immédiat pour mettre à jour le graphique
-    if (recalc) {
-        setTimeout(calculateCurve, 10); 
-    }
+    if (recalc) calculateCurve();
 };
 
 // Sauvegarde et Recalcul global
