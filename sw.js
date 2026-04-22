@@ -1,5 +1,5 @@
 // 1. Nom du cache - CHANGE CE NUMÉRO à chaque mise à jour sur GitHub
-const CACHE_NAME = 'f3f-manager-v6';
+const CACHE_NAME = 'f3f-manager-v6.1';
 
 // 2. Liste des fichiers à mettre en cache pour le mode hors-ligne
 // Vérifie bien que les chemins correspondent à ton GitHub
