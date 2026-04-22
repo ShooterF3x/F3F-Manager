@@ -10,6 +10,8 @@ const urlsToCache = [
   './js/app.js',
   './manifest.json',
   './icon.png'
+  './icon-192.png',  
+  './icon-512.png'
 ];
 
 // 3. Installation du Service Worker et mise en cache des fichiers
