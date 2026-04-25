@@ -1,17 +1,40 @@
-{
-  "name": "F3F Manager",
-  "short_name": "F3F",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0d6efd",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
-}
+const CACHE_NAME = 'f3f-manager-v5.981'; // J'ai changé le numéro pour forcer la mise à jour
+const ASSETS_TO_CACHE = [
+    './',
+    './index.html',
+    './css/style.css',
+    './js/app.js',
+    './manifest.json',
+    './icon.png',
+    'https://cdn.jsdelivr.net/npm/chart.js'
+    
+];
+
+self.addEventListener('install', (evt) => {
+    self.skipWaiting();
+    evt.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+            console.log('[SW] Mise en cache');
+            return cache.addAll(ASSETS_TO_CACHE);
+        })
+    );
+});
+
+self.addEventListener('activate', (evt) => {
+    evt.waitUntil(
+        caches.keys().then((keys) => {
+            return Promise.all(keys.map((key) => {
+                if (key !== CACHE_NAME) return caches.delete(key);
+            }));
+        })
+    );
+    self.clients.claim();
+});
+
+self.addEventListener('fetch', (evt) => {
+    evt.respondWith(
+        caches.match(evt.request).then((cacheRes) => {
+            return cacheRes || fetch(evt.request);
+        })
+    );
+});
