@@ -4,7 +4,7 @@
 /* --- DICTIONNAIRE DE TRADUCTION --- */
 const dict = {
     fr: {
-        new_model: "+ NOUVEAU MODÈLE", logbook_btn: "📓 JOURNAL DES VOLS", back: "RETOUR", config: "CONFIG",
+        new_model: " + NOUVEAU MODÈLE", logbook_btn: "📓 JOURNAL DES VOLS", back: "RETOUR", config: "CONFIG",
         settings_title: "PARAMÈTRES", language: "LANGUE", theme: "THÈME", global_calc: "Calcul Global",
         opt_title: "OPTIMISATION", opt_desc: "Réglages des limites acceptables pour l'algorithme.",
         lbl_tol_w_min: "Tol. Poids Moins (-g)", lbl_tol_w_max: "Tol. Poids Plus (+g)",
